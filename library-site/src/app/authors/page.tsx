@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Modal from 'react-modal';
 import { AuthorController } from 'library-api/src/controllers/authors/author.controller';
 import { FC, useEffect, useState } from 'react';
+import { Card } from './layout';
 import { useBooksProviders, useAuthorsProviders } from '@/hooks';
 import { Navbar } from '../layout';
 
@@ -90,81 +91,66 @@ const AuthorsPage: FC = () => {
   return (
     <main>
       <Navbar />
-      <h1 className="text-2xl font-bold mb-4">Author</h1>
-      <input
-        className="flex-grow text-black bg-white outline-none px-4 py-2 rounded-full mb-4"
-        type="text"
-        placeholder="Rechercher..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-      <button
-        type="button"
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mb-4"
-        onClick={() => setIsModalOpen(true)}
-      >
-        Add Author
-      </button>
+      <div className="flex flex-col items-center mt-7">
+        <h1 className="text-5xl font-bold mb-10">Page des Auteurs</h1>
+      </div>
+      <div className="flex justify-around items-center mb-4">
+        <input
+          className="text-black bg-white outline-none pl-4 pr-10 py-2 rounded-full mb-4"
+          type="text"
+          placeholder="Rechercher..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <button
+          type="button"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mb-4"
+          onClick={() => setIsModalOpen(true)}
+        >
+          Add Author
+        </button>
+      </div>
 
-      <table className="w-full text-left border-collapse">
-        <thead>
-          <tr>
-            <th
-              className="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light cursor-pointer"
-              onClick={() => toggleSort('firstName')}
+      <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <div className="flex justify-end px-4 pt-4">
+          <button
+            id="dropdownButton"
+            data-dropdown-toggle="dropdown"
+            className="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5"
+            type="button"
+          >
+            <span className="sr-only">Open dropdown</span>
+            <svg
+              className="w-5 h-5"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 16 3"
             >
-              First Name
-            </th>
-            <th
-              className="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light cursor-pointer"
-              onClick={() => toggleSort('lastName')}
-            >
-              Last Name
-            </th>
-            <th
-              className="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light"
-              onClick={() => toggleSort('numberofbooks')}
-            >
-              Number of Books
-            </th>
-            <th className="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">
-              Photo URL
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredAuthors.map((author) => (
-            <tr className="hover:bg-grey-lighter" key={author.id}>
-              <td className="py-4 px-6 border-b border-grey-light">
-                <Link
-                  href={`/authors/${author.id}`}
-                  className="hover:underline"
-                >
-                  {author.firstName}
-                </Link>
-              </td>
-              <td className="py-4 px-6 border-b border-grey-light">
-                <Link
-                  href={`/authors/${author.id}`}
-                  className="hover:underline"
-                >
-                  {author.lastName}
-                </Link>
-              </td>
-              <td className="py-4 px-6 border-b border-grey-light">
-                <p>{numberofbooks(Number(author.id))}</p>
-              </td>
-              <td className="py-4 px-6 border-b border-grey-light">
-                <img
-                  src={author.photoUrl}
-                  alt={`${author.firstName} ${author.lastName}`}
-                  className="w-16 h-16 object-cover rounded-full"
-                />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+              <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
+            </svg>
+          </button>
+          <div
+            id="dropdown"
+            className="z-10 hidden text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+          >
+            <ul className="py-2" aria-labelledby="dropdownButton">
+              <li>Edit</li>
+              <li>Delete</li>
+            </ul>
+          </div>
+        </div>
+        <div className="flex flex-col items-center pb-10">
+          <img className="w-24 h-24 mb-3 rounded-full shadow-lg" alt="" />
+          <h5
+            className="mb-1 text-xl font-medium text-gray-900 dark:text-white"
+            id="authorName"
+          >
+            azertyui
+          </h5>
+          <p id="numberBooks"> </p>
+        </div>
+      </div>
 
       <Modal
         isOpen={isModalOpen}

@@ -10,9 +10,12 @@ const Home: FC = (): ReactElement => {
   }, []);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      Home page
+    <main>
       <Navbar />
+      <div className="flex min-h-screen flex-col justify-center items-center">
+        <p className="text-lg">Bienvenue dans votre</p>
+        <p className="text-4xl font-bold">BiblioTech</p>
+      </div>
     </main>
   );
 };
