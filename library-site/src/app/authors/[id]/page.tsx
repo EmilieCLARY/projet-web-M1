@@ -1,7 +1,6 @@
 'use client';
 
 import React, { FC, useState, useEffect } from 'react';
-import axios from 'axios';
 import { useParams } from 'next/navigation';
 import {
   useBooksProviders,
@@ -9,51 +8,23 @@ import {
   useAuthorProviderById
 } from '@/hooks';
 
-/*interface AuthorModel {
-  id: number;
-  firstName: string;
-  lastName: string;
-  photoUrl: string;
-}
-
-interface BookModel {
-  id: number;
-  name: string;
-  author: AuthorModel;
-  writtenOn: Date;
-}*/
-
 const AuthorDetailsPage: FC = () => {
   const { id } = useParams();
-  const { useAuthor } = useAuthorProviderById();
+  const { UseAuthorById } = useAuthorProviderById();
+  const { author, load: loadAuthor } = UseAuthorById();
   const { useListBooks } = useBooksProviders();
-  const { books, load } = useListBooks();
-
-  /* const [booksByAuthor, setBooksByAuthor] = useState<BookModel[]>([]); */
+  const { books, load: loadBooks } = useListBooks();
 
   useEffect(() => {
-    load();
-  }, [load]);
+    loadAuthor(id.toString());
+    loadBooks();
+}, [loadAuthor, loadBooks]);
 
   const handleDelete = () => {
     deleteAuthorById(id.toString());
   };
 
-
-  
-  /* useEffect(() => {
-    axios
-      .get(`${process.env.NEXT_PUBLIC_API_URL}/authors/${id}`)
-      .then((response) => {
-        setAuthor(response.data);
-      })
-      .catch((error) => console.log(error));
-  }, [id]);
-
-  useEffect(() => {
-    const filteredBooks = books.filter((book) => book.author.id === id);
-    setBooksByAuthor(filteredBooks);
-  }, [books, id]);*/
+  const filteredBooks = books.filter((book) => book.author.id === id);
 
   return (
     <>
@@ -76,7 +47,7 @@ const AuthorDetailsPage: FC = () => {
               </tr>
             </thead>
             <tbody>
-              {booksByAuthor.map((book) => (
+              {filteredBooks.map((book) => (
                 <tr key={book.id} className="bg-gray-100">
                   <td className="border px-4 py-2">{book.name}</td>
                   <td className="border px-4 py-2">{`${author.firstName} ${author.lastName}`}</td>

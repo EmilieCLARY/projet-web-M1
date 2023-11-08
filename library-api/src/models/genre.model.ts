@@ -1,6 +1,6 @@
 import { GenreId } from 'library-api/src/entities';
 
-export type GenreModel = {
+export type PlainGenreModel = {
   id: GenreId;
   name: string;
 };
