@@ -16,7 +16,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-export const Card: React.FC = () => (
-
-);

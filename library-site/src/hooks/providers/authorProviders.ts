@@ -27,3 +27,33 @@ type AuthorsProviders = {
 export const useAuthorsProviders = (): AuthorsProviders => ({
   useListAuthors,
 });
+
+/* ------------------------------ */
+
+type UseAuthorProviderById = {
+  author: PlainAuthorModel;
+  load: (id: string) => void;
+};
+
+export const UseAuthorById = (): UseAuthorProviderById => {
+  const [author, setAuthor] = useState<PlainAuthorModel>(
+    {} as PlainAuthorModel,
+  );
+
+  const fetchAuthors = (id: string): void => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/authors/${id}`)
+      .then((data) => setAuthor(data.data))
+      .catch((err) => console.error(err));
+  };
+
+  return { author, load: fetchAuthors };
+};
+
+type AuthorProviderById = {
+  UseAuthorById: () => UseAuthorProviderById;
+};
+
+export const useAuthorProviderById = (): AuthorProviderById => ({
+  UseAuthorById,
+});

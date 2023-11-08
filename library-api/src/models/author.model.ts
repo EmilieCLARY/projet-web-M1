@@ -1,4 +1,4 @@
-import { Author, AuthorId } from 'library-api/src/entities';
+import { AuthorId } from 'library-api/src/entities';
 
 export type PlainAuthorModel = {
   id: AuthorId;

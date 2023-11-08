@@ -13,7 +13,7 @@ const Home: FC = (): ReactElement => {
     <main>
       <Navbar />
       <div className="flex min-h-screen flex-col justify-center items-center">
-        <p className="text-lg">Bienvenue dans votre</p>
+        <p className="text-lg">Welcome in your</p>
         <p className="text-4xl font-bold">BiblioTech</p>
       </div>
     </main>

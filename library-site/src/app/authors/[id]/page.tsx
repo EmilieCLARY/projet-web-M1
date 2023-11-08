@@ -3,9 +3,13 @@
 import React, { FC, useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'next/navigation';
-import { useBooksProviders } from '@/hooks';
+import {
+  useBooksProviders,
+  deleteAuthorById,
+  useAuthorProviderById
+} from '@/hooks';
 
-interface AuthorModel {
+/*interface AuthorModel {
   id: number;
   firstName: string;
   lastName: string;
@@ -17,20 +21,27 @@ interface BookModel {
   name: string;
   author: AuthorModel;
   writtenOn: Date;
-}
+}*/
 
 const AuthorDetailsPage: FC = () => {
   const { id } = useParams();
-  const [author, setAuthor] = useState<AuthorModel>();
-  const [booksByAuthor, setBooksByAuthor] = useState<BookModel[]>([]);
+  const { useAuthor } = useAuthorProviderById();
   const { useListBooks } = useBooksProviders();
   const { books, load } = useListBooks();
+
+  /* const [booksByAuthor, setBooksByAuthor] = useState<BookModel[]>([]); */
 
   useEffect(() => {
     load();
   }, [load]);
 
-  useEffect(() => {
+  const handleDelete = () => {
+    deleteAuthorById(id.toString());
+  };
+
+
+  
+  /* useEffect(() => {
     axios
       .get(`${process.env.NEXT_PUBLIC_API_URL}/authors/${id}`)
       .then((response) => {
@@ -42,7 +53,7 @@ const AuthorDetailsPage: FC = () => {
   useEffect(() => {
     const filteredBooks = books.filter((book) => book.author.id === id);
     setBooksByAuthor(filteredBooks);
-  }, [books, id]);
+  }, [books, id]);*/
 
   return (
     <>
@@ -54,6 +65,8 @@ const AuthorDetailsPage: FC = () => {
             Lastname: {author.lastName}
             Picture: <img src={author.photoUrl} alt="" />
           </p>
+          <button onClick={handleDelete}>Delete</button>
+          <button onClick={() => console.log('edit')}>Edit</button>
           <table className="table-auto w-full">
             <thead>
               <tr>
@@ -67,7 +80,9 @@ const AuthorDetailsPage: FC = () => {
                 <tr key={book.id} className="bg-gray-100">
                   <td className="border px-4 py-2">{book.name}</td>
                   <td className="border px-4 py-2">{`${author.firstName} ${author.lastName}`}</td>
-                  <td className="border px-4 py-2">{book.writtenOn}</td>
+                  <td className="border px-4 py-2">
+                    {(book.writtenOn).toString()}
+                  </td>
                 </tr>
               ))}
             </tbody>

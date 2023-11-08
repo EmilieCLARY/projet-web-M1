@@ -1,5 +1,7 @@
+import { AuthorModel } from './author.model';
+
 export type PlainBookModel = {
-  author: any;
+  author: AuthorModel;
   id: string;
   name: string;
 };

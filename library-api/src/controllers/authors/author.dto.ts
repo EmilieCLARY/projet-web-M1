@@ -1,15 +1,27 @@
+import { IsOptional, IsString } from 'class-validator';
+
 export class CreateAuthorDto {
+  @IsString()
   firstName: string;
 
+  @IsString()
   lastName: string;
+
+  @IsOptional()
+  @IsString()
+  photoUrl?: string;
 }
 
-export function isString(data: any): boolean {
-  return typeof data === 'string';
-}
+export class UpdateAuthorDto {
+  @IsOptional()
+  @IsString()
+  firstName?: string;
 
-export function validAuthor(input: CreateAuthorDto): void {
-  if (!isString(input.firstName) || !isString(input.lastName)) {
-    throw new Error('Author not valid');
-  }
+  @IsOptional()
+  @IsString()
+  lastName?: string;
+
+  @IsOptional()
+  @IsString()
+  photoUrl?: string;
 }
