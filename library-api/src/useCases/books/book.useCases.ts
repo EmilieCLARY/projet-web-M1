@@ -4,6 +4,7 @@ import { BookRepository } from 'library-api/src/repositories';
 import {
   BookUseCasesOutput,
   PlainBookUseCasesOutput,
+  CreateBookUseCasesInput,
 } from 'library-api/src/useCases/books/book.useCases.type';
 
 @Injectable()
@@ -27,4 +28,25 @@ export class BookUseCases {
   public async getById(id: BookId): Promise<BookUseCasesOutput> {
     return this.bookRepository.getById(id);
   }
+
+    /**
+   * Create a new Book
+   * @Param input Data to create the new book
+   * @returns Created Book
+   */
+    public async createNewBook(
+      input: CreateBookUseCasesInput,
+    ): Promise<PlainBookUseCasesOutput> {
+      return this.bookRepository.createNewBook(input);
+    }
+  
+    /**
+     * Delete an book from Database
+     * @param id Book's ID
+     * @throws NotFoundException : no book found
+     */
+    public async deletebyid(id: BookId): Promise<void> {
+      const book = await this.getById(id);
+      await this.bookRepository.deletebyid(book.id);
+    }
 }

@@ -5,14 +5,14 @@ import { PlainGenreUseCasesOutput } from 'library-api/src/useCases/genres/genre.
 
 @Injectable()
 export class GenreUseCases {
-  constructor(private readonly genreRepository: GenreRepository) {}
+  constructor(private readonly GenreRepository: GenreRepository) {}
 
   /**
    * Get all plain genres
    * @returns Array of plain genres
    */
   public async getAllPlain(): Promise<PlainGenreUseCasesOutput[]> {
-    return this.genreRepository.getAllPlain();
+    return this.GenreRepository.getAllPlain();
   }
 
   /**
@@ -22,7 +22,7 @@ export class GenreUseCases {
    * @throws 404: genre with this ID was not found
    */
   public async getById(id: GenreId): Promise<PlainGenreUseCasesOutput> {
-    return this.genreRepository.getById(id);
+    return this.GenreRepository.getById(id);
   }
 
   /**
@@ -30,12 +30,9 @@ export class GenreUseCases {
    * @Param input Data to create the new genre
    * @returns Created Genre
    */
-  public async create(
-    input: PlainGenreUseCasesOutput,
-  ): Promise<PlainGenreUseCasesOutput> {
-    return this.genreRepository.createGenre(input);
+  public async createNewGenre(input) {
+    return this.GenreRepository.createNewGenre(input);
   }
-
   /**
    * Delete an genre from Database
    * @param id Genre's ID
@@ -43,6 +40,6 @@ export class GenreUseCases {
    */
   public async deletebyid(id: GenreId): Promise<void> {
     const genre = await this.getById(id);
-    await this.genreRepository.deletebyid(genre.id);
+    await this.GenreRepository.deletebyid(genre.id);
   }
 }

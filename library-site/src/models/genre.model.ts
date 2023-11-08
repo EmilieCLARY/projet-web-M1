@@ -1,4 +1,4 @@
-export type PlainGenreModel = {
+export type GenreModel = {
     id: string;
     name: string;
   };

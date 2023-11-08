@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { AuthorModel, PlainBookModel, PlainGenreModel } from '@/models';
+import { AuthorModel, PlainBookModel, GenreModel } from '@/models';
 
 type CreateBookProvider = {
   author: AuthorModel;
   book: PlainBookModel;
-  genre: PlainGenreModel
+  // genre: GenreModel;
 };
 
 export const createNewBook = async (
@@ -13,7 +13,6 @@ export const createNewBook = async (
   try {
     const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/books`, {
       author: book.author,
-      id: book.id,
       name: book.name,
       writtenOn: book.writtenOn,
       genre: book.genre,

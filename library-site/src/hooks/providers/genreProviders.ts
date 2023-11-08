@@ -1,14 +1,14 @@
 import axios from 'axios';
 import { useState } from 'react';
-import { PlainGenreModel } from '@/models';
+import { GenreModel } from '@/models';
 
 type UseListGenresProvider = {
-  genres: PlainGenreModel[];
+  genres: GenreModel[];
   load: () => void;
 };
 
 export const useListGenres = (): UseListGenresProvider => {
-  const [genres, setGenres] = useState<PlainGenreModel[]>([]);
+  const [genres, setGenres] = useState<GenreModel[]>([]);
 
   const fetchGenres = (): void => {
     axios

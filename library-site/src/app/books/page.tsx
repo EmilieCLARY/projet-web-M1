@@ -11,7 +11,7 @@ import {
   useGenresProviders
 } from '@/hooks';
 import { createNewBook } from '@/hooks/creators/bookCreator';
-import { AuthorModel, PlainGenreModel } from '@/models';
+import { AuthorModel, GenreModel } from '@/models';
 
 const BooksPage: FC = () => {
   const { useListBooks } = useBooksProviders();
@@ -44,7 +44,8 @@ const BooksPage: FC = () => {
       name,
       author: author as unknown as AuthorModel,
       writtenOn,
-      genre: genre as unknown as PlainGenreModel,
+      genre,
+      // genre: genre as unknown as PlainGenreModel,
     };
 
     await createNewBook(newBook);
@@ -120,7 +121,7 @@ const BooksPage: FC = () => {
             Select Author 
             <select value={genre} onChange={(e): void => setGenre(e.target.value)}>
               {genres.map(item => {
-                  return (<option key={item.id} value={item.id}>{item.name}</option>);
+                  return (<option key={item.id} value={item.name}>{item.name}</option>);
               })}
             </select>
           </label>

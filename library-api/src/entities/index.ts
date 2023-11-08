@@ -5,7 +5,6 @@ import { Genre } from 'library-api/src/entities/Genre';
 import { User } from 'library-api/src/entities/User';
 
 export * from './Author';
-// eslint-disable-next-line import/no-cycle
 export * from './Book';
 export * from './BookGenre';
 export * from './Genre';

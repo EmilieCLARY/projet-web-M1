@@ -3,13 +3,15 @@
 import Link from 'next/link';
 import Modal from 'react-modal';
 import React, { FC, useEffect, useState } from 'react';
-import { useAuthorsProviders } from '@/hooks';
+import { useAuthorsProviders, useBooksProviders } from '@/hooks';
 import { Navbar } from '../layout';
 import { createNewAuthor } from '@/hooks/creators/authorCreator';
 
 const AuthorsPage: FC = () => {
   const { useListAuthors } = useAuthorsProviders();
-  const { authors, load } = useListAuthors();
+  const { authors, load: loadAuthor } = useListAuthors();
+  const { useListBooks } = useBooksProviders();
+  const { books, load: loadBooks } = useListBooks();
   const [searchTerm, setSearchTerm] = useState('');
   const [sortField, setSortField] = useState('firstName');
   const [sortDirection, setSortDirection] = useState('asc');
@@ -42,11 +44,19 @@ const AuthorsPage: FC = () => {
     setIsModalOpen(false);
   };
 
-  useEffect(() => load, [load]);
+  useEffect(() => {
+    loadBooks();
+    loadAuthor();
+  }, [loadBooks, loadAuthor]);
 
   useEffect(() => {
     document.title = 'Authors';
   }, []);
+
+  function GetNumberOfBooks(authorId: string) {
+    const numberOfBooks = books.filter((book) => book.author.id === authorId).length;
+    return numberOfBooks;
+  };
 
   const filteredAuthors = authors
     .filter((author) =>
@@ -140,7 +150,7 @@ const AuthorsPage: FC = () => {
                   {author.lastName}
                 </Link>
               </h5>
-              <p id="numberBooks">3</p>
+              <p id="numberBooks">{GetNumberOfBooks(author.id)}</p>
             </div>
           </div>
         ))}

@@ -5,7 +5,7 @@ import {
   InternalServerError,
   NotFoundError,
 } from 'library-api/src/common/errors';
-import { PlainGenreRepositoryOutput } from './genre.repository.type';
+import { GenreRepositoryOutput } from './genre.repository.type';
 import { adaptGenreEntityToPlainGenreModel } from './genre.utils';
 
 @Injectable()
@@ -18,7 +18,7 @@ export class GenreRepository extends Repository<Genre> {
    * Get all plain genres
    * @returns Array of plain genres
    */
-  public async getAllPlain(): Promise<PlainGenreRepositoryOutput[]> {
+  public async getAllPlain(): Promise<GenreRepositoryOutput[]> {
     const genres = await this.find({});
 
     return genres.map(adaptGenreEntityToPlainGenreModel);
@@ -31,7 +31,7 @@ export class GenreRepository extends Repository<Genre> {
    * @throws 404: genre with this ID was not found
    */
 
-  public async getById(id: GenreId): Promise<PlainGenreRepositoryOutput> {
+  public async getById(id: GenreId): Promise<GenreRepositoryOutput> {
     const genre = await this.findOne({ where: { id } });
 
     if (!genre) {
@@ -45,9 +45,9 @@ export class GenreRepository extends Repository<Genre> {
    * @returns Created Genre
    */
 
-  public async createGenre(
-    input: PlainGenreRepositoryOutput,
-  ): Promise<PlainGenreRepositoryOutput> {
+  public async createNewGenre(
+    input: GenreRepositoryOutput,
+  ): Promise<GenreRepositoryOutput> {
     const id = await this.dataSource.transaction(async (manager) => {
       const [newGenre] = await manager.save<Genre>([
         manager.create<Genre>(Genre, { ...input }),

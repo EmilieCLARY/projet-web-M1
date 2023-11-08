@@ -1,3 +1,3 @@
-import { PlainGenreModel } from 'library-api/src/models';
+import { GenreModel } from 'library-api/src/models';
 
-export type PlainGenreUseCasesOutput = PlainGenreModel;
+export type PlainGenreUseCasesOutput = GenreModel;
