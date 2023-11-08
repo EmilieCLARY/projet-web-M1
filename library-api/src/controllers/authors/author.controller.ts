@@ -3,6 +3,8 @@ import { PlainAuthorPresenter } from 'library-api/src/controllers/authors/author
 import { AuthorId } from 'library-api/src/entities';
 import { AuthorUseCases } from 'library-api/src/useCases';
 import { CreateAuthorDto, validAuthor } from './author.dto';
+import { PlainAuthorModel } from 'library-api/src/models';
+import { AuthorModel } from 'library-api/src/models/author.model';
 
 @Controller('authors')
 export class AuthorController {
@@ -24,14 +26,16 @@ export class AuthorController {
     return PlainAuthorPresenter.from(author);
   }
 
-  @Post()
-  public async create(
-    @Body() input: CreateAuthorDto,
-  ): Promise<PlainAuthorPresenter> {
-    validAuthor(input);
-    const author = await this.authorUseCases.create(input);
-
-    return PlainAuthorPresenter.from(author);
+  @Post('/')
+  public async create(@Body() author: AuthorModel): Promise<{}> {
+    const newAuthor = await this.authorUseCases.create(author);
+    const plainAuthor: PlainAuthorModel = {
+      id: newAuthor.id,
+      firstName: newAuthor.firstName,
+      lastName: newAuthor.lastName,
+      photoUrl: newAuthor.photoUrl,
+    };
+    return plainAuthor;
   }
 
   @Delete('/:id')
