@@ -28,6 +28,8 @@ const AuthorsPage: FC = () => {
       bottom: 'auto',
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
+      background: 'rgb(8 47 73)',
+      border: 'round',
     },
   };
 
@@ -54,9 +56,10 @@ const AuthorsPage: FC = () => {
   }, []);
 
   function GetNumberOfBooks(authorId: string) {
-    const numberOfBooks = books.filter((book) => book.author.id === authorId).length;
+    const numberOfBooks = books.filter(
+      (book) => book.author.id === authorId).length;
     return numberOfBooks;
-  };
+  }
 
   const filteredAuthors = authors
     .filter((author) =>
@@ -83,10 +86,10 @@ const AuthorsPage: FC = () => {
   };
 
   return (
-    <main>
+    <main className="bg-cyan-200">
       <Navbar />
       <div className="flex flex-col items-center mt-7">
-        <h1 className="text-5xl font-bold mb-10">Authors</h1>
+        <h1 className="text-5xl font-bold mb-10 text-sky-950">Authors</h1>
       </div>
       <div className="flex justify-around items-center mb-4">
         <input
@@ -130,7 +133,7 @@ const AuthorsPage: FC = () => {
 
       <div className="flex justify-around flex-wrap ">
         {filteredAuthors.map((author) => (
-          <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-10">
+          <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg bg-sky-950 shadow dark:border-gray-700 m-10">
             <div className="flex flex-col items-center pb-10">
               <img
                 className="w-24 h-24 mb-3 rounded-full shadow-lg"
@@ -162,37 +165,43 @@ const AuthorsPage: FC = () => {
         contentLabel="Ajouter Auteur"
         style={customStyles}
       >
-        <h1 className="flex justify-center text-lg mb-4">Add Authors</h1>
+        <h1 className="flex justify-center text-lg mb-4 text-white text-2xl">
+          Add Authors
+        </h1>
+        <hr className="mb-2"></hr>
         <form onSubmit={handleAddAuthor}>
-          <label htmlFor="firstName" className="block mb-2">
+          <label htmlFor="firstName" className="block mb-2 text-white">
             First Name
             <input
               id="firstName"
               type="text"
+              placeholder="..."
               value={firstName}
               onChange={(e): void => setFirstName(e.target.value)}
-              className="flex mt-1 p-2 w-1/2"
+              className="flex mt-1 p-2 w-2/3 border-sky-950 text-black rounded-lg"
             />
           </label>
-          <label htmlFor="lastName" className="block mb-2">
+          <label htmlFor="lastName" className="block mb-2 text-white">
             Last Name
             <input
               type="text"
+              placeholder="..."
               value={lastName}
               onChange={(e): void => setLastName(e.target.value)}
-              className="mt-1 p-2 w-full"
+              className="flex mt-1 p-2 w-2/3 border-sky-950 text-black rounded-lg"
             />
           </label>
-          <label htmlFor="photoURL" className="block mb-2">
+          <label htmlFor="photoURL" className="block mb-2 text-white">
             Photo URL
             <input
               type="text"
+              placeholder="https://example.com/image.jpg"
               value={photoUrl}
               onChange={(e): void => setPhotoUrl(e.target.value)}
-              className="mt-1 p-2 w-full"
+              className="mt-1 p-2 w-full border-sky-950 text-black rounded-lg"
             />
           </label>
-          <div className="flex justify-between">
+          <div className="flex justify-between text-white">
             <button
               type="submit"
               className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"

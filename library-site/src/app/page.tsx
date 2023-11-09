@@ -10,11 +10,11 @@ const Home: FC = (): ReactElement => {
   }, []);
 
   return (
-    <main>
+    <main className="bg-cyan-200">
       <Navbar />
       <div className="flex min-h-screen flex-col justify-center items-center">
-        <p className="text-lg">Welcome in your</p>
-        <p className="text-4xl font-bold">BiblioTech</p>
+        <h2 className="text-lg text-sky-950">Welcome to your</h2>
+        <h1 className="text-5xl font-bold text-sky-950">Library</h1>
       </div>
     </main>
   );

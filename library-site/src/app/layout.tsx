@@ -18,13 +18,16 @@ export default function RootLayout({
 }
 
 export const Navbar: React.FC = () => (
-  <nav className="z-10 top-0 sticky bg-white border-gray-200 dark:bg-gray-900">
-    <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-      <a href="/" className="flex items-center text-grey-1000">
+  <nav className="z-10 top-0 sticky bg-white bg-sky-950">
+    <div className="flex flex-wrap justify-between items-center p-4">
+      <a href="/" className="flex items-center text-grey-1000 text-2xl mx-5">
         BiblioTech
       </a>
-      <div className="hidden w-full md:block md:w-auto" id="navbar-default">
-        <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-12 md:mt-0 md:border-0  md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+      <div
+        className="hidden w-full md:block md:w-auto mx-10"
+        id="navbar-default"
+      >
+        <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-12 md:mt-0 md:border-0  bg-sky-950">
           <li>
             <a
               href="/"
