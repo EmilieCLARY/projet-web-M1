@@ -27,3 +27,33 @@ type BookProviders = {
 export const useBooksProviders = (): BookProviders => ({
   useListBooks,
 });
+
+/* ------------------------------ */
+
+type UseBookProviderById = {
+  book: PlainBookModel;
+  load: (id: string) => void;
+};
+
+export const UseBookById = (): UseBookProviderById => {
+  const [book, setBook] = useState<PlainBookModel>(
+    {} as PlainBookModel,
+  );
+
+  const fetchBooks = (id: string): void => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/books/${id}`)
+      .then((data) => setBook(data.data))
+      .catch((err) => console.error(err));
+  };
+
+  return { book, load: fetchBooks };
+};
+
+type BookProviderById = {
+  UseBookById: () => UseBookProviderById;
+};
+
+export const useBookProviderById = (): BookProviderById => ({
+  UseBookById,
+});

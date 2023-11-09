@@ -5,7 +5,7 @@ export type PlainBookModel = {
   id: string;
   name: string;
   writtenOn: string;
-  genre: string[];
+  genres: string[];
 };
 
 export type CreateBookModel = {
