@@ -51,8 +51,11 @@ const BooksPage: FC = () => {
       genres:[genre],
       // genre: genre as unknown as PlainGenreModel,
     };
-
-    useCreateNewBook(newBook);
+    if (newBook.author) {
+      useCreateNewBook(newBook);
+    } else {
+      alert('Please select an author');
+    }
     setIsModalOpen(false);
   };
 

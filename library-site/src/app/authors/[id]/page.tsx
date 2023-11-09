@@ -58,15 +58,19 @@ const AuthorDetailsPage: FC = () => {
                 className="mb-1 text-xl font-medium text-gray-900 dark:text-white"
                 id="authorName"
               >
-                <Link
-                  href={`/authors/${author.id}`}
-                  className="hover:underline"
-                >
-                  Firstname :
-                  {author.firstName}
-                  {'\u00A0'}
-                  {author.lastName}
-                </Link>
+                Firstname :
+                {'\u00A0'}
+                {author.firstName}
+                {/* eslint-disable-next-line react/self-closing-comp */}
+                <br></br>
+                Last name :
+                {'\u00A0'}
+                {author.lastName}
+                {/* eslint-disable-next-line react/self-closing-comp */}
+                <br></br>
+                Books written :
+                {'\u00A0'}
+                {}
               </h5>
               <p id="numberBooks">{GetNumberOfBooks(author.id)}</p>
             </div>
