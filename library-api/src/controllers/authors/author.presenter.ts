@@ -8,7 +8,7 @@ export class PlainAuthorPresenter {
 
   lastName: string;
 
-  photoUrl?: string;
+  photoUrl: string;
 
   private constructor(data: PlainAuthorPresenter) {
     Object.assign(this, data);

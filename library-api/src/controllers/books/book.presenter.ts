@@ -8,7 +8,7 @@ export class PlainBookPresenter {
 
   name: string;
 
-  writtenOn: Date;
+  writtenOn: string;
 
   author: PlainAuthorPresenter;
 
@@ -36,7 +36,7 @@ export class BookPresenter {
 
   author: PlainAuthorPresenter;
 
-  writtenOn: Date;
+  writtenOn: string;
 
   genres: GenrePresenter[];
 
