@@ -29,7 +29,7 @@ const AuthorsPage: FC = () => {
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
       background: 'rgb(8 47 73)',
-      border: 'round',
+      border: 'rounded',
     },
   };
 
@@ -133,10 +133,10 @@ const AuthorsPage: FC = () => {
 
       <div className="flex justify-around flex-wrap ">
         {filteredAuthors.map((author) => (
-          <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg bg-sky-950 shadow dark:border-gray-700 m-10">
+          <div className="w-full max-w-sm border border-gray-200 rounded-lg bg-sky-950 shadow dark:border-gray-700 m-10">
             <div className="flex flex-col items-center pb-10">
               <img
-                className="w-24 h-24 mb-3 rounded-full shadow-lg"
+                className="w-24 h-24 mb-3 rounded-full shadow-lg mt-2"
                 alt=""
                 src={author.photoUrl}
               />

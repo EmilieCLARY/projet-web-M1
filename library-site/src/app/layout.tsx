@@ -18,10 +18,10 @@ export default function RootLayout({
 }
 
 export const Navbar: React.FC = () => (
-  <nav className="z-10 top-0 sticky bg-white bg-sky-950">
+  <nav className="z-10 top-0 sticky bg-sky-950">
     <div className="flex flex-wrap justify-between items-center p-4">
       <a href="/" className="flex items-center text-grey-1000 text-2xl mx-5">
-        BiblioTech
+        Library
       </a>
       <div
         className="hidden w-full md:block md:w-auto mx-10"
