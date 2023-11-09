@@ -64,25 +64,22 @@ const BooksPage: FC = () => {
 
   return (
     <>
-      <main>
+      <main className="bg-cyan-200">
         <Navbar />
-        <div className="flex flex-col items-center mt-4">
-          <h1 className="text-3xl font-bold mb-4">Books</h1>
+        <div className="flex flex-col items-center mt-7">
+          <h1 className="text-5xl font-bold mb-10 text-sky-950">Books</h1>
         </div>
-      </main>
-
-      <button
+        <button
           type="button"
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mb-4"
           onClick={(): void => setIsModalOpen(true)}
         >
           Add Books
         </button>
-
+      </main>
       {books.map((book) => (
         <div key={book.id}>{book.name}</div>
       ))}
-      
       <Modal
         isOpen={isModalOpen}
         onRequestClose={(): void => setIsModalOpen(false)}
