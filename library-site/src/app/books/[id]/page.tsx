@@ -29,7 +29,7 @@ const BookDetailsPage: FC = () => {
   };
 
   return (
-    <html className="bg-cyan-200">
+    <main className="h-screen bg-gradient-to-r from-cyan-200 to-blue-300">
       <Navbar />
       <h1 className="flex justify-around items-center text-sky-950 text-5xl font-bold my-6">
         Book Details
@@ -63,7 +63,7 @@ const BookDetailsPage: FC = () => {
           Delete book
         </button>
       </div>
-    </html>
+    </main>
   );
 };
 

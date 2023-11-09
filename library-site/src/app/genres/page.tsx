@@ -32,7 +32,6 @@ const GenresPage: FC = () => {
           </div>
         ))}
       </div>
-
     </main>
   );
 };

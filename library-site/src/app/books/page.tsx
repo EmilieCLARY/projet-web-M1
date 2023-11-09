@@ -28,6 +28,7 @@ const BooksPage: FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortKey, setSortKey] = useState('');
   const [sortDirection, setSortDirection] = useState('asc');
+  const [selectedGenre, setSelectedGenre] = useState('');
 
   const customStyles = {
     content: {
@@ -49,7 +50,7 @@ const BooksPage: FC = () => {
       name,
       author: author as unknown as AuthorModel,
       writtenOn,
-      genres:[genre],
+      genres: [genre],
       // genre: genre as unknown as PlainGenreModel,
     };
     if (newBook.author) {
@@ -90,7 +91,8 @@ const BooksPage: FC = () => {
           comparison = a.name.localeCompare(b.name);
           break;
         case 'numberOfBooks':
-          comparison = new Date(a.writtenOn).getTime() - new Date(b.writtenOn).getTime();
+          comparison =
+            new Date(a.writtenOn).getTime() - new Date(b.writtenOn).getTime();
           break;
         default:
           break;
@@ -98,14 +100,15 @@ const BooksPage: FC = () => {
       return sortDirection === 'asc' ? comparison : -comparison;
     })
     .filter(
-      (book) => book.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        `${book.author.firstName} ${book.author.lastName}`
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase()),
+      (book) => (selectedGenre === '' || book.genres.includes(selectedGenre)) &&
+        (book.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          `${book.author.firstName} ${book.author.lastName}`
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase())),
     );
 
   return (
-    <main className="bg-gradient-to-r from-cyan-200 to-blue-300">
+    <main className="h-screen bg-gradient-to-r from-cyan-200 to-blue-300">
       <Navbar />
       <div className="flex flex-col items-center mt-7">
         <h1 className="text-5xl font-bold mb-10 text-sky-950">Books</h1>
@@ -148,6 +151,21 @@ const BooksPage: FC = () => {
         >
           Sort by Date
         </button>
+        <label htmlFor="genreFilter" className="block mb-2 text-white">
+          <select
+            id="genreFilter"
+            value={selectedGenre}
+            className="flex p-2 w-auto border-sky-950 text-white font-bold rounded-lg bg-blue-500 hover:bg-blue-700"
+            onChange={(e): void => setSelectedGenre(e.target.value)}
+          >
+            <option value="">All Genres</option>
+            {genres.map((item) => (
+              <option key={item.id} value={item.name}>
+                {item.name}
+              </option>
+            ))}
+          </select>
+        </label>
       </div>
       <div className="flex flex-wrap justify-around items-center">
         {filteredBooks.map((book) => (
