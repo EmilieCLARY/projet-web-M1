@@ -11,3 +11,9 @@ export type AuthorModel = {
   lastName: string;
   photoUrl?: string;
 };
+
+export type UpdateAuthorModel = {
+  firstName?: string;
+  lastName?: string;
+  photoUrl?: string;
+};

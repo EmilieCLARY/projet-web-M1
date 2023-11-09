@@ -48,4 +48,8 @@ export class AuthorUseCases {
     const author = await this.getById(id);
     await this.authorRepository.deletebyid(author.id);
   }
+
+  public async updateById(input) {
+    return this.authorRepository.updateById(input);
+  }
 }
