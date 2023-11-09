@@ -1,4 +1,3 @@
-/* eslint-disable import/no-cycle */
 import { BaseEntity, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
 import { Genre } from './Genre';
 import { Book } from './Book';

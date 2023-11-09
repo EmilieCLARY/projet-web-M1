@@ -46,38 +46,39 @@ const AuthorDetailsPage: FC = () => {
         Author Details
       </h1>
       {author && (
-        <>
-          <div className="w-full max-w-sm border border-gray-200 rounded-lg bg-sky-950 shadow dark:border-gray-700 m-10">
+        <div className="flex">
+          <div className="w-2/5 mx-auto my-10 border border-gray-200 rounded-lg bg-sky-950 ">
             <div className="flex flex-col items-center pb-10">
               <img
-                className="w-24 h-24 mb-3 rounded-full shadow-lg mt-2"
+                className="w-auto h-72 mt-10 mb-6 rounded-2xl shadow-lg"
                 alt=""
                 src={author.photoUrl}
               />
-              <h5
-                className="mb-1 text-xl font-medium text-gray-900 dark:text-white"
-                id="authorName"
-              >
-                Firstname :
-                {'\u00A0'}
+              <div className="flex items-center text-2xl my-4 mx-auto text-white">
+                First name :{'\u00A0'}
                 {author.firstName}
+                {/* eslint-disable-next-line max-len */}
+                {/* Désactivé car eslint demande quelque chose dans la balise br alors qu'elle sert juste à faire sauter une ligne */}
                 {/* eslint-disable-next-line react/self-closing-comp */}
                 <br></br>
-                Last name :
-                {'\u00A0'}
+                Last name :{'\u00A0'}
                 {author.lastName}
                 {/* eslint-disable-next-line react/self-closing-comp */}
                 <br></br>
-                Books written :
-                {'\u00A0'}
-                {}
-              </h5>
-              <p id="numberBooks">{GetNumberOfBooks(author.id)}</p>
+                Books written :{'\u00A0'}
+                {GetNumberOfBooks(author.id)}
+              </div>
+              <div className="flex justify-around">
+                <button type="button" onClick={handleDelete}>
+                  Delete author
+                </button>
+                <button type="button" onClick={() => console.log('edit')}>
+                  Edit author
+                </button>
+              </div>
             </div>
           </div>
-          <button onClick={handleDelete} type='button'>Delete</button>
-          <button onClick={() => console.log('edit')}>Edit</button>
-          <table className="table-auto w-full">
+          <table className="table-auto w-full my-8">
             <thead>
               <tr>
                 <th className="px-4 py-2">Book Name</th>
@@ -91,13 +92,13 @@ const AuthorDetailsPage: FC = () => {
                   <td className="border px-4 py-2">{book.name}</td>
                   <td className="border px-4 py-2">{`${author.firstName} ${author.lastName}`}</td>
                   <td className="border px-4 py-2">
-                    {(book.writtenOn).toString()}
+                    {book.writtenOn.toString()}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-        </>
+        </div>
       )}
     </main>
   );

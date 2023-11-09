@@ -17,6 +17,7 @@ export class GenrePresenter {
 
 export class PlainGenrePresenter {
   id: GenreId;
+
   name: string;
 
   private constructor(data: PlainGenrePresenter) {

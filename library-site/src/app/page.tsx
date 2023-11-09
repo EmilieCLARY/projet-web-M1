@@ -14,7 +14,7 @@ const Home: FC = (): ReactElement => {
       <Navbar />
       <div className="flex min-h-screen flex-col justify-center items-center">
         <h2 className="text-lg text-sky-950">Welcome to</h2>
-        <h1 className="text-5xl font-bold text-sky-950">the Reading Oasis</h1>
+        <h1 className="text-5xl font-bold text-sky-950">The Readers Oasis</h1>
       </div>
     </main>
   );

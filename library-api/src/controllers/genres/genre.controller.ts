@@ -1,8 +1,11 @@
 import { Controller, Get, Param, Post, Delete, Body } from '@nestjs/common';
-import { GenrePresenter, PlainGenrePresenter } from 'library-api/src/controllers/genres/genre.presenter';
+import {
+  GenrePresenter,
+  PlainGenrePresenter,
+} from 'library-api/src/controllers/genres/genre.presenter';
 import { GenreId } from 'library-api/src/entities';
 import { GenreUseCases } from 'library-api/src/useCases';
-import { CreateGenreDto } from '../genres/genre.dto'
+import { CreateGenreDto } from './genre.dto';
 
 @Controller('genres')
 export class GenreController {
@@ -24,13 +27,13 @@ export class GenreController {
 
   @Post('/')
   public async createNewGenre(
-      @Body() input: CreateGenreDto,
+    @Body() input: CreateGenreDto,
   ): Promise<GenrePresenter> {
-      return this.genreUseCases.createNewGenre(input);
+    return this.genreUseCases.createNewGenre(input);
   }
 
   @Delete('/:id')
   public async deletebyid(@Param('id') id: GenreId): Promise<void> {
-      return this.genreUseCases.deletebyid(id);
+    return this.genreUseCases.deletebyid(id);
   }
 }

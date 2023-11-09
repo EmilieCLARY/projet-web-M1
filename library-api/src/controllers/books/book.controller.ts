@@ -5,7 +5,7 @@ import {
 } from 'library-api/src/controllers/books/book.presenter';
 import { BookId } from 'library-api/src/entities';
 import { BookUseCases } from 'library-api/src/useCases';
-import { CreateBookDto } from '../books/book.dto';
+import { CreateBookDto } from './book.dto';
 
 @Controller('books')
 export class BookController {

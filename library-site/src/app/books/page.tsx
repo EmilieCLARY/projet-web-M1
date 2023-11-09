@@ -97,14 +97,14 @@ const BooksPage: FC = () => {
       return sortDirection === 'asc' ? comparison : -comparison;
     })
     .filter(
-      (book) => book.name.toLowerCase().includes(searchTerm.toLowerCase())
-        || `${book.author.firstName} ${book.author.lastName}`
+      (book) => book.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        `${book.author.firstName} ${book.author.lastName}`
           .toLowerCase()
           .includes(searchTerm.toLowerCase()),
     );
 
   return (
-    <main className="bg-cyan-200 bg-cover">
+    <main className="bg-cyan-200 bg-repeat">
       <Navbar />
       <div className="flex flex-col items-center mt-7">
         <h1 className="text-5xl font-bold mb-10 text-sky-950">Books</h1>
@@ -154,16 +154,21 @@ const BooksPage: FC = () => {
             key={book.id}
             className="flex flex-col justify-around items-center bg-white rounded-lg shadow-lg p-6 m-8 min-w-max max-w-xs min-h-max border-2 border-sky-950"
           >
-            <Link href={`/books/${book.id}`}>
+            <Link href={`/books/${book.id}`} className="hover:underline">
               <p className="text-2xl font-bold text-sky-950">{book.name}</p>
             </Link>
-            <p className="text-lg text-sky-950">
-              {book.author.firstName}
-              {'\u00A0'}
-              {book.author.lastName}
-            </p>
+            <Link
+              href={`/authors/${book.author.id}`}
+              className="hover:underline"
+            >
+              <p className="text-lg text-sky-950">
+                {book.author.firstName}
+                {'\u00A0'}
+                {book.author.lastName}
+              </p>
+            </Link>
             <p className="text-lg text-sky-950">{book.writtenOn}</p>
-            <p className="text-lg text-sky-950">{book.genre}</p>
+            <p className="text-lg text-sky-950">{book.genres}</p>
           </div>
         ))}
       </div>
@@ -183,10 +188,12 @@ const BooksPage: FC = () => {
               className="text-black mx-10"
               onChange={(e): void => setAuthor(e.target.value)}
             >
-              {authors.map(item => {
-                return (<option key={item.id} value={item.id}>{item.firstName} - {item.lastName}</option>);
-              })}
-          </select>
+              {authors.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.firstName}-{item.lastName}
+                </option>
+              ))}
+            </select>
           </label>
           <label htmlFor="name" className="block mb-2">
             Book Name
@@ -209,15 +216,17 @@ const BooksPage: FC = () => {
             />
           </label>
           <label htmlFor="genre" className="block mb-2">
-            Select Genre 
+            Select Genre
             <select
               value={genre}
               className="text-black mx-10"
-              onChange={(e): void =>
-              setGenre(e.target.value)}>
-              {genres.map(item => {
-                  return (<option key={item.id} value={item.name}>{item.name}</option>);
-              })}
+              onChange={(e): void => setGenre(e.target.value)}
+            >
+              {genres.map((item) => (
+                <option key={item.id} value={item.name}>
+                  {item.name}
+                </option>
+              ))}
             </select>
           </label>
           <div className="flex justify-between">

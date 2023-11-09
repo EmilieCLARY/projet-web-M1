@@ -55,13 +55,18 @@ const AuthorsPage: FC = () => {
     document.title = 'Authors';
   }, []);
 
-  function GetNumberOfBooks(authorId: string) {
+  function GetNumberOfBooks(authorId: string): number {
     const numberOfBooks = books.filter(
-      (book) => book.author.id === authorId).length;
+      (book) => book.author.id === authorId,
+    ).length;
     return numberOfBooks;
   }
 
   const filteredAuthors = authors
+    .map(author => ({
+      ...author,
+      numberOfBooks: GetNumberOfBooks(author.id)
+    }))
     .filter((author) =>
       `${author.firstName} ${author.lastName}`
         .toLowerCase()
@@ -73,9 +78,17 @@ const AuthorsPage: FC = () => {
           ? a.firstName.localeCompare(b.firstName)
           : b.firstName.localeCompare(a.firstName);
       }
-      return sortDirection === 'asc'
-        ? a.lastName.localeCompare(b.lastName)
-        : b.lastName.localeCompare(a.lastName);
+      if (sortField === 'lastName') {
+        return sortDirection === 'asc'
+          ? a.lastName.localeCompare(b.lastName)
+          : b.lastName.localeCompare(a.lastName);
+      }
+      if (sortField === 'numberOfBooks') {
+        return sortDirection === 'asc'
+          ? a.numberOfBooks - b.numberOfBooks
+          : b.numberOfBooks - a.numberOfBooks;
+      }
+      return 0;
     });
 
   const toggleSort = (field: string): void => {
@@ -141,7 +154,7 @@ const AuthorsPage: FC = () => {
                 src={author.photoUrl}
               />
               <h5
-                className="mb-1 text-xl font-medium text-gray-900 dark:text-white"
+                className="mb-1 text-xl font-medium text-gray-900 text-white"
                 id="authorName"
               >
                 <Link
@@ -153,7 +166,7 @@ const AuthorsPage: FC = () => {
                   {author.lastName}
                 </Link>
               </h5>
-              <p id="numberBooks">{GetNumberOfBooks(author.id)}</p>
+              <p id="numberBooks" className="text-white">{GetNumberOfBooks(author.id)}</p>
             </div>
           </div>
         ))}
@@ -168,7 +181,7 @@ const AuthorsPage: FC = () => {
         <h1 className="flex justify-center text-lg mb-4 text-white text-2xl">
           Add Authors
         </h1>
-        <hr className="mb-2"></hr>
+        <hr className="mb-2" />
         <form onSubmit={handleAddAuthor}>
           <label htmlFor="firstName" className="block mb-2 text-white">
             First Name

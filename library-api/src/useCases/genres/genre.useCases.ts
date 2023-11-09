@@ -33,6 +33,7 @@ export class GenreUseCases {
   public async createNewGenre(input) {
     return this.GenreRepository.createNewGenre(input);
   }
+
   /**
    * Delete an genre from Database
    * @param id Genre's ID
