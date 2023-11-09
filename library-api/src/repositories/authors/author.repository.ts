@@ -10,6 +10,7 @@ import {
   PlainAuthorRepositoryOutput,
 } from './author.repository.type';
 import { adaptAuthorEntityToPlainAuthorModel } from './author.utils';
+import { UpdateAuthorRepositoryInput } from '../authors/author.repository.type';
 
 @Injectable()
 export class AuthorRepository extends Repository<Author> {
@@ -70,5 +71,24 @@ export class AuthorRepository extends Repository<Author> {
    */
   public async deletebyid(id: AuthorId): Promise<void> {
     await this.delete(id);
+  }
+
+  /**
+   * Update an author from database
+   * @param input Author's data
+   * @returns Updated author
+   */
+  public async updateById(input: UpdateAuthorRepositoryInput): Promise<PlainAuthorRepositoryOutput>{
+    const id = await this.dataSource.transaction(async (manager) => {
+      const author = await this.findOne({ where: { id: input.id } });
+      if (!author) {
+        throw new NotFoundError(`Author - '${input.id}'`);
+      }
+
+      await manager.save({ ...author, ...input });
+      return { ...author, ...input }.id;
+    });
+
+    return this.getById(id);
   }
 }
