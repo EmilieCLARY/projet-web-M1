@@ -10,7 +10,7 @@ export type PlainBookModel = {
 
 export type CreateBookModel = {
   name: string;
-  writtenOn: Date;
+  writtenOn: string;
   author: AuthorModel;
   genres: string[];
 };

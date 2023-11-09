@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { NotFoundError, InternalServerError } from 'library-api/src/common/errors';
-import { Book, BookId, BookGenre, Genre } from 'library-api/src/entities';
+import { Book, BookId, BookGenre, Genre, Author } from 'library-api/src/entities';
 import {
   BookRepositoryOutput,
   PlainBookRepositoryOutput,
@@ -11,7 +11,7 @@ import {
   adaptBookEntityToPlainBookModel,
 } from 'library-api/src/repositories/books/book.utils';
 import { DataSource, Repository, In } from 'typeorm';
-import { uuidv4 } from 'uuid';
+import { v4 } from 'uuid';
 
 @Injectable()
 export class BookRepository extends Repository<Book> {
@@ -74,46 +74,47 @@ export class BookRepository extends Repository<Book> {
    * @Param input Data to create the new book
    * @returns Created Book
    */
-  public async createNewBook(
-    input: CreateBookRepositoryInput,
-  ): Promise<PlainBookRepositoryOutput> {
-
-    const id = await this.dataSource.transaction(async (manager) => {
-      const newBook = await manager.save<Book>(
-        manager.create<Book>(Book, {
-          ...input,
-          id: uuidv4(),
-          bookGenres: undefined, // Réinitialisation des genres de livre
-        }),
-      );
-
-      if (!newBook) {
-        throw new InternalServerError('An error occured creating new Book');
-      }
-
-      else {
-        const newGenres = await manager.find<Genre>(Genre, {
-          where: {
-            name: In(input.genres),
-          },
-        });
-
-        await manager.save<BookGenre>(
-          newGenres.map((genre) =>
-            manager.create<BookGenre>(BookGenre, {
-              id: uuidv4(),
-              book: { id: newBook.id },
-              genre,
-            }),
-          ),
+    public async createNewBook(
+      input: CreateBookRepositoryInput,
+    ): Promise<PlainBookRepositoryOutput> {
+  
+      const id = await this.dataSource.transaction(async (manager) => {
+        const newBook = await manager.save<Book>(
+          manager.create<Book>(Book, {
+            ...input,
+            id: v4(),
+            bookGenres: undefined, // Réinitialisation des genres de livre
+          }),
         );
-
-      }
-
-      return newBook.id;
-    });
-    return this.getPlainById(id);
-  }
+  
+        if (!newBook) {
+          throw new NotFoundException('An error occured creating new Book');
+        }
+  
+        else {
+          const newGenres = await manager.find<Genre>(Genre, {
+            where: {
+              name: In(input.genres),
+            },
+          });
+  
+          await manager.save<BookGenre>(
+            newGenres.map((genre) =>
+              manager.create<BookGenre>(BookGenre, {
+                id: v4(),
+                book: { id: newBook.id },
+                genre,
+              }),
+            ),
+          );
+  
+        }
+  
+        return newBook.id;
+      });
+      
+      return this.getPlainById(id);
+    }
 
   /**
    * Delete an book from database

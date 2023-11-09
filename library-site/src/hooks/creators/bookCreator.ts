@@ -1,21 +1,20 @@
 import axios from 'axios';
-import { AuthorModel, PlainBookModel, GenreModel } from '@/models';
+import { CreateBookModel, PlainAuthorModel } from '@/models';
 
 type CreateBookProvider = {
-  author: AuthorModel;
-  book: PlainBookModel;
-  // genre: GenreModel;
+  book: CreateBookModel;
+  author: PlainAuthorModel;
 };
 
-export const createNewBook = async (
-  book: PlainBookModel,
+export const useCreateNewBook = async (
+  book: CreateBookModel,
 ): Promise<CreateBookProvider> => {
   try {
     const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/books`, {
       author: book.author,
       name: book.name,
       writtenOn: book.writtenOn,
-      genre: book.genre,
+      genres: book.genres,
     });
 
     window.location.href = '/books';

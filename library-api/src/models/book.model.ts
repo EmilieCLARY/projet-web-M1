@@ -5,7 +5,7 @@ import { GenreModel } from 'library-api/src/models/genre.model';
 export type PlainBookModel = {
   id: BookId;
   name: string;
-  writtenOn: Date;
+  writtenOn: string;
   author: PlainAuthorModel;
   genres: string[];
 };
@@ -13,7 +13,7 @@ export type PlainBookModel = {
 export type BookModel = {
   id: BookId;
   name: string;
-  writtenOn: Date;
+  writtenOn: string;
   author: Author;
   genres: GenreModel[];
 };

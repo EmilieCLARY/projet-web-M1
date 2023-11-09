@@ -20,8 +20,8 @@ export class Book extends BaseEntity {
   @Column()
   name: string;
 
-  @Column({ type: 'date' })
-  writtenOn: Date;
+  @Column()
+  writtenOn: string;
 
   @ManyToOne(() => Author, (author) => author.books, { onDelete: 'CASCADE' })
   author: Author;
