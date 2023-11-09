@@ -39,6 +39,7 @@ const BooksPage: FC = () => {
       transform: 'translate(-50%, -50%)',
       background: 'rgb(8 47 73)',
       border: 'round',
+      width: '33.33%',
     },
   };
 
@@ -104,7 +105,7 @@ const BooksPage: FC = () => {
     );
 
   return (
-    <main className="bg-cyan-200 bg-repeat">
+    <main className="bg-gradient-to-r from-cyan-200 to-blue-300">
       <Navbar />
       <div className="flex flex-col items-center mt-7">
         <h1 className="text-5xl font-bold mb-10 text-sky-950">Books</h1>
@@ -154,14 +155,16 @@ const BooksPage: FC = () => {
             key={book.id}
             className="flex flex-col justify-around items-center bg-white rounded-lg shadow-lg p-6 m-8 min-w-max max-w-xs min-h-max border-2 border-sky-950"
           >
-            <Link href={`/books/${book.id}`} className="hover:underline">
-              <p className="text-2xl font-bold text-sky-950">{book.name}</p>
+            <Link href={`/books/${book.id}`}>
+              <p className="text-2xl font-bold text-sky-950 hover:underline">
+                {book.name}
+              </p>
             </Link>
             <Link
               href={`/authors/${book.author.id}`}
               className="hover:underline"
             >
-              <p className="text-lg text-sky-950">
+              <p className="text-lg text-sky-950 hover:underline">
                 {book.author.firstName}
                 {'\u00A0'}
                 {book.author.lastName}
@@ -179,47 +182,51 @@ const BooksPage: FC = () => {
         contentLabel="Ajouter Livre"
         style={customStyles}
       >
-        <h1 className="flex justify-center text-lg mb-4">Add Books</h1>
+        <h1 className="flex justify-center text-xl mb-4 text-white">
+          Add a new Book
+        </h1>
         <form onSubmit={handleAddBook}>
-          <label htmlFor="author" className="block mb-2">
+          <label htmlFor="author" className="block mb-2 text-white">
             Select Author
             <select
               value={author}
-              className="text-black mx-10"
+              className="flex mt-1 p-2 w-2/3 border-sky-950 text-black bg-white rounded-lg"
               onChange={(e): void => setAuthor(e.target.value)}
             >
               {authors.map((item) => (
                 <option key={item.id} value={item.id}>
-                  {item.firstName}-{item.lastName}
+                  {item.firstName}
+                  {'\u00A0'}
+                  {item.lastName}
                 </option>
               ))}
             </select>
           </label>
-          <label htmlFor="name" className="block mb-2">
+          <label htmlFor="name" className="block mb-2 text-white">
             Book Name
             <input
               type="text"
+              placeholder="..."
               value={name}
-              placeholder="Write a name..."
               onChange={(e): void => setName(e.target.value)}
-              className="mt-1 p-2 w-2/3"
+              className="flex mt-1 p-2 w-2/3 border-sky-950 text-black bg-white rounded-lg"
             />
           </label>
-          <label htmlFor="writtenOn" className="block mb-2">
+          <label htmlFor="writtenOn" className="block mb-2 text-white">
             Written On
             <input
               type="text"
+              placeholder="YYYY"
               value={writtenOn}
-              placeholder="Write a year..."
               onChange={(e): void => setWrittenOn(e.target.value)}
-              className="mt-1 p-2 w-2/3"
+              className="flex mt-1 p-2 w-2/3 border-sky-950 text-black bg-white rounded-lg"
             />
           </label>
-          <label htmlFor="genre" className="block mb-2">
+          <label htmlFor="genre" className="block mb-2 text-white">
             Select Genre
             <select
               value={genre}
-              className="text-black mx-10"
+              className="flex mt-1 p-2 w-2/3 border-sky-950 text-black rounded-lg bg-white"
               onChange={(e): void => setGenre(e.target.value)}
             >
               {genres.map((item) => (
