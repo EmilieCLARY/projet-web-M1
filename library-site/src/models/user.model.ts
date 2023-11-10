@@ -1,4 +1,4 @@
-import { PlainBookModel } from "./book.model";
+import { PlainBookModel } from './book.model';
 
 export type PlainUserModel = {
   id: string;
