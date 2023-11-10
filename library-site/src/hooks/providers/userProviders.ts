@@ -36,9 +36,7 @@ type UseUserProviderById = {
 };
 
 export const UseUserById = (): UseUserProviderById => {
-  const [user, setUser] = useState<UserModel>(
-    {} as UserModel,
-  );
+  const [user, setUser] = useState<UserModel>({} as UserModel);
 
   const fetchUsers = (id: string): void => {
     axios

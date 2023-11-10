@@ -13,7 +13,10 @@ export const deleteBookById = async (id: string): Promise<void> => {
   }
 };
 
-export const deleteBookFromAuthorById = async (idBook: string, idAuthor: string): Promise<void> => {
+export const deleteBookFromAuthorById = async (
+  idBook: string,
+  idAuthor: string,
+): Promise<void> => {
   try {
     const response = await axios.delete(
       `${process.env.NEXT_PUBLIC_API_URL}/books/${idBook}`,

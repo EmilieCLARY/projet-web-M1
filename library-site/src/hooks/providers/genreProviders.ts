@@ -17,13 +17,13 @@ export const useListGenres = (): UseListGenresProvider => {
       .catch((err) => console.error(err));
   };
 
-  return { genres: genres, load: fetchGenres };
+  return { genres, load: fetchGenres };
 };
 
 type GenreProviders = {
-    useListGenres: () => UseListGenresProvider;
+  useListGenres: () => UseListGenresProvider;
 };
 
 export const useGenresProviders = (): GenreProviders => ({
-    useListGenres,
+  useListGenres,
 });
