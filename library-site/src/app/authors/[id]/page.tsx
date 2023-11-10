@@ -32,6 +32,7 @@ const AuthorDetailsPage: FC = () => {
   const [name, setName] = useState('');
   const [writtenOn, setWrittenOn] = useState('');
   const [genre, setGenre] = useState('');
+  const [sortConfig, setSortConfig] = useState({ key: '', direction: 'asc' });
 
   const customStyles = {
     content: {
@@ -93,7 +94,7 @@ const AuthorDetailsPage: FC = () => {
       alert('Please fill all the fields');
     }
     setIsModalOpen(false);
-  };
+  }
 
   function GetNumberOfBooks(authorId: string): number {
     const numberOfBooks = books.filter(
@@ -102,7 +103,26 @@ const AuthorDetailsPage: FC = () => {
     return numberOfBooks;
   }
 
-  const filteredBooks = books.filter((book) => book.author.id === id);
+  const requestSort = (key: string): void => {
+    let direction = 'asc';
+    if (sortConfig.key === key && sortConfig.direction === 'asc') {
+      direction = 'desc';
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const filteredBooks = [...books]
+    .filter((book) => book.author.id === id)
+    .sort((a, b) => {
+      const key = sortConfig.key as keyof typeof a; // Add this line
+      if (a[key] < b[key]) {
+        return sortConfig.direction === 'asc' ? -1 : 1;
+      }
+      if (a[key] > b[key]) {
+        return sortConfig.direction === 'asc' ? 1 : -1;
+      }
+      return 0;
+    });
 
   return (
     <main className="h-screen bg-gradient-to-r from-cyan-200 to-blue-300">
@@ -158,9 +178,24 @@ const AuthorDetailsPage: FC = () => {
             <table className="table-auto my-8">
               <thead>
                 <tr>
-                  <th className="border px-4 py-6">Book Name</th>
-                  <th className="border px-4 py-6">Genre</th>
-                  <th className="border px-4 py-6">Date Written</th>
+                  <th
+                    className="border px-4 py-6 hover:underline cursor-pointer"
+                    onClick={(): void => requestSort('name')}
+                  >
+                    Book Name
+                  </th>
+                  <th
+                    className="border px-4 py-6 hover:underline cursor-pointer"
+                    onClick={(): void => requestSort('genre')}
+                  >
+                    Genre
+                  </th>
+                  <th
+                    className="border px-4 py-6 hover:underline cursor-pointer"
+                    onClick={(): void => requestSort('writtenOn')}
+                  >
+                    Date Written
+                  </th>
                   <th className="border px-4 py-6">Remove Book</th>
                 </tr>
               </thead>
@@ -262,7 +297,12 @@ const AuthorDetailsPage: FC = () => {
         <h1 className="flex justify-center text-xl mb-4 text-white">
           Add a new Book
         </h1>
-        <form onSubmit={(e) => { e.preventDefault(); handleBookAdd(author); }}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleBookAdd(author);
+          }}
+        >
           <label htmlFor="author" className="block mb-2 text-white">
             Select Author
             <input
