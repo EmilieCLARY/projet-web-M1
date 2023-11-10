@@ -1,6 +1,6 @@
 'use client';
 
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { Navbar } from '../../layout';
 import { useBookProviderById, deleteBookById } from '@/hooks';
@@ -49,8 +49,12 @@ const BookDetailsPage: FC = () => {
         </div>
         <div className="flex flex-col text-2xl ml-5 mt-4 text-sky-950">
           <h1 className="text-sky-950 text-3xl font-bold">{book.name}</h1>
-          <br></br>
+          <br />
+          {/* Même problème de retour à la ligne */}
+          {/* eslint-disable-next-line react/jsx-one-expression-per-line */}
           <p>Genre : {getListOfGenres()}</p>
+          {/* Même problème de retour à la ligne */}
+          {/* eslint-disable-next-line react/jsx-one-expression-per-line */}
           <p>Edited date : {book.writtenOn}</p>
         </div>
       </div>

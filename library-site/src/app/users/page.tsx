@@ -5,7 +5,7 @@ import Modal from 'react-modal';
 import React, { FC, useEffect, useState } from 'react';
 import { useUsersProviders, createNewUser } from '@/hooks';
 import { Navbar } from '../layout';
-import { currentUser } from '../login/page';
+// import { currentUser } from '../login/page';
 
 const UsersPage: FC = () => {
   const { useListUsers } = useUsersProviders();
@@ -30,7 +30,7 @@ const UsersPage: FC = () => {
   }, [loadUsers]);
 
   useEffect(() => {
-    document.title = 'Users List';
+    document.title = "Readers' List";
   }, []);
 
   const handleAddUser = async (e: React.FormEvent): Promise<void> => {
@@ -46,15 +46,18 @@ const UsersPage: FC = () => {
   };
 
   return (
-    <main>
+    <main className="h-screen bg-gradient-to-r from-cyan-200 to-blue-300">
       <Navbar />
+      <h1 className="flex justify-around items-center text-sky-950 text-5xl font-bold my-6">
+        Readers&apos; List
+      </h1>
       <button
-          type="button"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mb-4"
-          onClick={(): void => setIsModalOpen(true)}
-        >
-          Add Users
-        </button>
+        type="button"
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mb-4"
+        onClick={(): void => setIsModalOpen(true)}
+      >
+        Add a new Reader
+      </button>
       <div className="flex justify-around flex-wrap ">
         {users.map((user) => (
           <div className="w-full max-w-sm border border-gray-200 rounded-lg bg-sky-950 shadow dark:border-gray-700 m-10">
@@ -63,10 +66,7 @@ const UsersPage: FC = () => {
                 className="mb-1 text-xl font-medium text-gray-900 text-white"
                 id="authorName"
               >
-                <Link
-                  href={`/users/${user.id}`}
-                  className="hover:underline"
-                >
+                <Link href={`/users/${user.id}`} className="hover:underline">
                   {user.firstname}
                   {'\u00A0'}
                   {user.lastname}

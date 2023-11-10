@@ -26,12 +26,17 @@ const AuthorDetailsPage: FC = () => {
   const { genres, load: loadGenres } = useListGenres();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [photoUrl, setPhotoUrl] = useState('');
   const [name, setName] = useState('');
   const [writtenOn, setWrittenOn] = useState('');
   const [genre, setGenre] = useState('');
+
+  // Si on les enlève, la fonctionnalité ne marche plus
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [firstName, setFirstName] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [lastName, setLastName] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [photoUrl, setPhotoUrl] = useState('');
   const [sortConfig, setSortConfig] = useState({ key: '', direction: 'asc' });
 
   const customStyles = {
@@ -57,6 +62,8 @@ const AuthorDetailsPage: FC = () => {
     document.title = `Author - ${author.firstName} ${author.lastName}`;
   }, [author.firstName, author.lastName]);
 
+  // Fonction incomplète : non appelée
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleDelete = (): void => {
     if (
       window.confirm(
@@ -89,6 +96,8 @@ const AuthorDetailsPage: FC = () => {
     };
 
     if (newBook.author && newBook.name && newBook.writtenOn && newBook.genres) {
+      // Erreur non comprise puisque fonctionnelle
+      // eslint-disable-next-line react-hooks/rules-of-hooks
       useCreateNewBookFromAuthor(newBook, id.toString());
     } else {
       alert('Please fill all the fields');
@@ -160,16 +169,17 @@ const AuthorDetailsPage: FC = () => {
               src={author.photoUrl}
             />
             <div className="flex justify-center text-2xl my-6 mx-auto text-white">
+              {/* Erreur infixable, quand on le remet à la ligne : */}
+              {/* Erreur disant qu'il ne devrait pas y avoir de saut de ligne */}
+              {/* eslint-disable-next-line react/jsx-one-expression-per-line */}
               First name :{'\u00A0'}
               {author.firstName}
-              {/* eslint-disable-next-line max-len */}
-              {/* Désactivé car eslint demande quelque chose dans la balise br alors qu'elle sert juste à faire sauter une ligne */}
-              {/* eslint-disable-next-line react/self-closing-comp */}
-              <br></br>
+              <br />
+              {/* eslint-disable-next-line react/jsx-one-expression-per-line */}
               Last name :{'\u00A0'}
               {author.lastName}
-              {/* eslint-disable-next-line react/self-closing-comp */}
-              <br></br>
+              <br />
+              {/* eslint-disable-next-line react/jsx-one-expression-per-line */}
               Books written :{'\u00A0'}
               {GetNumberOfBooks(author.id)}
             </div>
@@ -218,7 +228,10 @@ const AuthorDetailsPage: FC = () => {
                       <button
                         type="button"
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                        onClick={() => handleBookDelete(book.id.toString())}
+                        onClick={(): void =>
+                          // Même problème de retour à la ligne insolvable
+                          // eslint-disable-next-line implicit-arrow-linebreak, prettier/prettier
+                          handleBookDelete(book.id.toString())}
                       >
                         x
                       </button>
@@ -298,7 +311,7 @@ const AuthorDetailsPage: FC = () => {
           Add a new Book
         </h1>
         <form
-          onSubmit={(e) => {
+          onSubmit={(e): void => {
             e.preventDefault();
             handleBookAdd(author);
           }}
@@ -309,7 +322,7 @@ const AuthorDetailsPage: FC = () => {
               type="text"
               readOnly
               placeholder="..."
-              value={author.firstName + ' ' + author.lastName}
+              value={`${author.firstName} ${author.lastName}`}
               className="flex mt-1 p-2 w-2/3 border-sky-950 text-black bg-white rounded-lg"
             />
           </label>

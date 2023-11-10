@@ -1,78 +1,58 @@
-﻿import { Inter } from 'next/font/google';
+﻿/* eslint-disable prefer-destructuring */
+// Destructuring is not working here (pageName and pageName2)
+import { Inter } from 'next/font/google';
 import './globals.css';
 import { ReactElement, ReactNode } from 'react';
 import * as React from 'react';
-import { currentUser } from './login/page';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
-import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import { cp } from 'fs';
+import { currentUser } from './login/page';
 
 const inter = Inter({ subsets: ['latin'] });
 
-function CustomSeparator() {
-  let pageName = window.location.pathname.split('/')[1];
+function CustomSeparator(): ReactElement {
+  let pageName = '';
+  if (typeof window !== 'undefined') {
+    pageName = window.location.pathname.split('/')[1];
+  }
+
   let breadcrumbs = [];
 
   if (pageName === '') {
     pageName = 'Home';
     breadcrumbs = [
-      <Link underline="hover" key="1" color="inherit" href="/">
+      <Link underline="hover" key="1" color="white" href="/">
         Home
       </Link>,
     ];
   } else {
     breadcrumbs = [
-      <Link
-        underline="hover"
-        key="1"
-        color="inherit"
-        href="/"
-        className="text-white"
-      >
+      <Link underline="hover" key="1" color="white" href="/">
         Home
       </Link>,
-      <Link
-        underline="hover"
-        key="2"
-        color="inherit"
-        href={`/${pageName}`}
-        className="text-white"
-      >
+      <Link underline="hover" key="2" color="white" href={`/${pageName}`}>
         {pageName}
       </Link>,
     ];
   }
-
-  const pageName2 = window.location.pathname.split('/')[2];
+  let pageName2 = '';
+  if (typeof window !== 'undefined') {
+    pageName2 = window.location.pathname.split('/')[2];
+  }
   if (pageName2 !== '' && pageName2 !== undefined) {
     breadcrumbs = [
-      <Link
-        underline="hover"
-        key="1"
-        color="inherit"
-        href="/"
-        className="text-white"
-      >
+      <Link underline="hover" key="1" color="white" href="/">
         Home
       </Link>,
-      <Link
-        underline="hover"
-        key="2"
-        color="inherit"
-        href={`/${pageName}`}
-        className="text-white"
-      >
+      <Link underline="hover" key="2" color="white" href={`/${pageName}`}>
         {pageName}
       </Link>,
       <Link
         underline="hover"
         key="3"
-        color="inherit"
+        color="white"
         href={`/${pageName}/${pageName2}`}
-        className="text-white"
       >
         {pageName2}
       </Link>,
@@ -81,7 +61,7 @@ function CustomSeparator() {
 
   return (
     <Stack spacing={2}>
-      <Breadcrumbs separator="›" aria-label="breadcrumb" className="text-white">
+      <Breadcrumbs separator="/" aria-label="breadcrumb" color="white">
         {breadcrumbs}
       </Breadcrumbs>
     </Stack>
@@ -106,7 +86,9 @@ export const Navbar: React.FC = () => (
       <a href="/" className="flex items-center text-white text-2xl mx-5">
         The Readers&apos; Oasis
       </a>
-      <a className="flex items-center text-white text-2xl mx-5">
+      <a href="/" className="flex items-center text-white text-2xl mx-5">
+        {/* Encore une erreur de retour à la ligne obligatoire puis interdit */}
+        {/* eslint-disable-next-line react/jsx-one-expression-per-line */}
         {currentUser.firstname} - {currentUser.lastname}
       </a>
       <CustomSeparator />
