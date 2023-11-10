@@ -1,10 +1,8 @@
 'use client';
 
-import Link from 'next/link';
 import React, { FC, useEffect, useState } from 'react';
 import { useUsersProviders, createNewUser } from '@/hooks';
 import { PlainUserModel } from '@/models';
-import { Console } from 'console';
 
 const LoginPage: FC = () => {
   const { useListUsers } = useUsersProviders();
@@ -20,34 +18,30 @@ const LoginPage: FC = () => {
     document.title = 'Login Page';
   }, []);
 
-  function checkUser(userToTest: PlainUserModel) {
-    let isFound = false;
-    users.map((user): void => {
-      // L'utilisateur existe déjà
-      if (
-        {/* eslint-disable-next-line operator-linebreak */}
-        userToTest.firstname === user.firstname &&
-        userToTest.lastname === user.lastname
-      ) {
-        window.location.href = '/';
-        isFound = true;
-      }
-    });
-    if (!isFound) {
-      // L'utilisateur n'existe pas et on propose de le créer
-      if (userToTest.firstname == '' || userToTest.lastname == '') {
-        alert('Please fill all the fields');
-      } else if (
-        window.confirm(
-          'Are you sure you want to create an account with these information ?',
-        )
-      ) {
-        createNewUser(userToTest);
-        log('User created');
-        window.location.href = '/';
-      } else {
-        console.log('User not created');
-      }
+  function checkUser(userToTest: PlainUserModel): void {
+    const isFound = users.some(
+      (user) =>
+        // Erreur impossible à fix
+        // eslint-disable-next-line  prettier/prettier, implicit-arrow-linebreak
+        userToTest.firstname === user.firstname
+        // eslint-disable-next-line prettier/prettier
+        && userToTest.lastname === user.lastname,
+    );
+
+    if (isFound) {
+      window.location.href = '/';
+    } else if (userToTest.firstname === '' || userToTest.lastname === '') {
+      alert('Please fill all the fields');
+    } else if (
+      window.confirm(
+        'Are you sure you want to create an account with these information ?',
+      )
+    ) {
+      createNewUser(userToTest);
+      console.log('User created');
+      window.location.href = '/';
+    } else {
+      console.log('User not created');
     }
   }
 

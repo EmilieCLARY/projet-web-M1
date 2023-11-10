@@ -2,6 +2,7 @@
 
 import React, { FC, useEffect } from 'react';
 import { useParams } from 'next/navigation';
+import Link from '@mui/material/Link';
 import { Navbar } from '../../layout';
 import { useBookProviderById, deleteBookById } from '@/hooks';
 
@@ -12,13 +13,14 @@ const BookDetailsPage: FC = () => {
 
   useEffect(() => {
     loadBook(id.toString());
-  }, [loadBook]);
+  });
 
   useEffect(() => {
     document.title = `Books - ${book.name}`;
   }, [book.name]);
 
   function getListOfGenres(): string {
+    // Erreur impossible à résoudre (cela empêche la récupération du nom des genres)
     return book.genres?.map((genre) => genre.name).join(', ');
   }
 
@@ -42,9 +44,15 @@ const BookDetailsPage: FC = () => {
             src={book.author?.photoUrl}
           />
           <div className="flex justify-center text-2xl my-6 mx-auto text-white">
-            {book.author?.firstName}
-            {'\u00A0'}
-            {book.author?.lastName}
+            <Link 
+              underline="hover"
+              color="white"
+              href={`/authors/${book.author?.id}`}
+            >
+              {book.author?.firstName}
+              {'\u00A0'}
+              {book.author?.lastName}
+            </Link>
           </div>
         </div>
         <div className="flex flex-col text-2xl ml-5 mt-4 text-sky-950">

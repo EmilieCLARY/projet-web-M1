@@ -1,18 +1,31 @@
-﻿/* eslint-disable prefer-destructuring */
+﻿'use client';
+
+/* eslint-disable prefer-destructuring */
 // Destructuring is not working here (pageName and pageName2)
 import { Inter } from 'next/font/google';
 import './globals.css';
-import { ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode, useEffect } from 'react';
 import * as React from 'react';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
+import {
+  useBookProviderById,
+  useAuthorProviderById,
+  useUserProviderById,
+} from '@/hooks';
 
 const inter = Inter({ subsets: ['latin'] });
 
 function BreadCrumbs(): ReactElement {
   let pageName = window.location.pathname.split('/')[1];
   let breadcrumbs = [];
+  const { UseBookById } = useBookProviderById();
+  const { book, load: loadBook } = UseBookById();
+  const { UseAuthorById } = useAuthorProviderById();
+  const { author, load: loadAuthor } = UseAuthorById();
+  const { UseUserById } = useUserProviderById();
+  const { user, load: loadUser } = UseUserById();
 
   if (pageName === '') {
     pageName = 'Home';
@@ -32,9 +45,29 @@ function BreadCrumbs(): ReactElement {
     ];
   }
 
-  const pageName2 = window.location.pathname.split('/')[2];
+  let pageName2 = window.location.pathname.split('/')[2];
 
-  if (pageName2 !== '' && pageName2 !== undefined) {
+  if (pageName2 === undefined || pageName2 === '') {
+    pageName2 = 'vide';
+  }
+
+  useEffect(() => {
+    loadBook(pageName2.toString());
+    loadAuthor(pageName2.toString());
+    loadUser(pageName2.toString());
+  });
+
+  const handleName = (): string => {
+    if (pageName === 'books') {
+      return book.name;
+    }
+    if (pageName === 'authors') {
+      return `${author.firstName} ${author.lastName}`;
+    }
+    return `${user.firstname} ${user.lastname}`;
+  };
+
+  if (pageName2 !== 'vide') {
     breadcrumbs = [
       <Link underline="hover" key="1" color="white" href="/">
         Home
@@ -48,7 +81,7 @@ function BreadCrumbs(): ReactElement {
         color="white"
         href={`/${pageName}/${pageName2}`}
       >
-        {pageName2}
+        {handleName()}
       </Link>,
     ];
   }
@@ -108,14 +141,6 @@ export const Navbar: React.FC = () => (
               className="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0  md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white   md:dark:hover:bg-transparent"
             >
               Authors
-            </a>
-          </li>
-          <li>
-            <a
-              href="/genres"
-              className="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0  md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white   md:dark:hover:bg-transparent"
-            >
-              Genres
             </a>
           </li>
           <li>
