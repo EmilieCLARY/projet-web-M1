@@ -97,3 +97,5 @@ Nous avons eu énormément de conflits entre prettier et eslint, du genre : L'un
 Nous avons donc dû disable eslint à certains endroits.
 
 Cependant nous ne pouvions pas disable les 'warnings' au niveau des images des auteurs dans les fichiers pages.tsx. Nous avons décidé de quand même laisser les warnings car les images sont tout de même nécessaires au design du site et si nous voulions retirer ces warnings il fallait importer d'autres librairies que celles du projet.
+
+Dernière erreur que nous avons dû laisser sur la page /books/:id à la ligne 24. Résoudre cette erreur nous empêche de récupérer les noms des genres du livre en question (cela nous renvoie [Object object] alors qu'actuellement nous obtenons par exemple 'Fantaisie').
