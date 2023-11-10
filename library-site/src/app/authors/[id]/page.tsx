@@ -134,7 +134,7 @@ const AuthorDetailsPage: FC = () => {
     });
 
   return (
-    <main className="h-screen bg-gradient-to-r from-cyan-200 to-blue-300">
+    <main className="min-h-screen bg-gradient-to-r from-cyan-200 to-blue-300">
       <Navbar />
       <div className="text-white flex justify-around items-center my-6">
         <h1 className="text-sky-950 text-5xl font-bold">Author Details</h1>
@@ -162,7 +162,7 @@ const AuthorDetailsPage: FC = () => {
       </div>
       {author && (
         <div className="flex flex-row justify-around mt-10">
-          <div className="w-1/3 my-10 border border-gray-200 rounded-lg bg-sky-950 flex flex-col items-center my-2 flex-start">
+          <div className="w-1/3 my-10 border border-gray-200 rounded-lg bg-sky-950 flex flex-col items-center my-2">
             <img
               className="w-auto h-72 mt-10 mb-6 rounded-2xl shadow-lg"
               alt=""

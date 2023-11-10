@@ -13,6 +13,10 @@ const UsersPage: FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortKey, setSortKey] = useState('');
+  const [sortDirection, setSortDirection] = useState('asc');
+
   const customStyles = {
     content: {
       top: '50%',
@@ -46,13 +50,61 @@ const UsersPage: FC = () => {
     setIsModalOpen(false);
   };
 
+  const handleSortAndFilter = (key) => {
+    setSortKey(key);
+    setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    setSearchTerm('');
+  };
+
+  const sortedAndFilteredUsers = users
+    .filter(
+      (user) =>
+        user.firstname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.lastname.toLowerCase().includes(searchTerm.toLowerCase()),
+    )
+    .sort((a, b) => {
+      let comparison = 0;
+      switch (sortKey) {
+        case 'firstname':
+          comparison = a.firstname.localeCompare(b.firstname);
+          break;
+        case 'lastname':
+          comparison = a.lastname.localeCompare(b.lastname);
+          break;
+        default:
+          break;
+      }
+      return sortDirection === 'asc' ? comparison : -comparison;
+    });
+
   return (
-    <main className="h-screen bg-gradient-to-r from-cyan-200 to-blue-300">
+    <main className="min-h-screen bg-gradient-to-r from-cyan-200 to-blue-300">
       <Navbar />
       <h1 className="flex justify-around items-center text-sky-950 text-5xl font-bold my-6">
         Readers&apos; List
       </h1>
       <div className="flex justify-around">
+        <input
+          className="text-black bg-white outline-none pl-4 pr-10 py-2 rounded-full mb-4"
+          type="text"
+          placeholder="Search..."
+          value={searchTerm}
+          onChange={(e): void => setSearchTerm(e.target.value)}
+        />
+        <button
+          type="button"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full ml-8 mb-4"
+          onClick={(): void => handleSortAndFilter('firstname')}
+        >
+          Sort by First Name
+        </button>
+        <button
+          type="button"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full ml-8 mb-4"
+          onClick={(): void => handleSortAndFilter('lastname')}
+        >
+          Sort by Last Name
+        </button>
         <button
           type="button"
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mb-4"
@@ -62,7 +114,7 @@ const UsersPage: FC = () => {
         </button>
       </div>
       <div className="flex justify-around flex-wrap ">
-        {users.map((user) => (
+        {sortedAndFilteredUsers.map((user) => (
           <div className="w-full flex flex-col items-center py-5 max-w-sm border border-gray-200 rounded-lg bg-sky-950 m-10 hover:bg-blue-700">
             <h5
               className="mb-1 text-xl font-medium text-gray-900 text-white text-center"

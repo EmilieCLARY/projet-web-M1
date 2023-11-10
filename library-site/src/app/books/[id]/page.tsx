@@ -31,12 +31,12 @@ const BookDetailsPage: FC = () => {
   };
 
   return (
-    <main className="h-screen bg-gradient-to-r from-cyan-200 to-blue-300">
+    <main className="min-h-screen bg-gradient-to-r from-cyan-200 to-blue-300">
       <Navbar />
       <h1 className="flex justify-around items-center text-sky-950 text-5xl font-bold my-6">
         Book Details
       </h1>
-      <div className="flex justify-center">
+      <div className="flex justify-center items-center">
         <div className="w-1/3 my-10 border border-gray-200 rounded-lg bg-sky-950 flex flex-col items-center my-2 flex-start">
           <img
             className="w-auto h-80 mt-10 rounded-2xl shadow-lg"
@@ -44,7 +44,7 @@ const BookDetailsPage: FC = () => {
             src={book.author?.photoUrl}
           />
           <div className="flex justify-center text-2xl my-6 mx-auto text-white">
-            <Link 
+            <Link
               underline="hover"
               color="white"
               href={`/authors/${book.author?.id}`}
@@ -55,7 +55,7 @@ const BookDetailsPage: FC = () => {
             </Link>
           </div>
         </div>
-        <div className="flex flex-col text-2xl ml-5 mt-4 text-sky-950">
+        <div className="flex flex-col text-2xl ml-8 text-sky-950 items-center">
           <h1 className="text-sky-950 text-3xl font-bold">{book.name}</h1>
           <br />
           {/* Même problème de retour à la ligne */}
@@ -66,7 +66,7 @@ const BookDetailsPage: FC = () => {
           <p>Edited date : {book.writtenOn}</p>
         </div>
       </div>
-      <div className="text-white flex justify-around items-center my-6">
+      <div className="text-white flex justify-around items-center my-6 mb-10">
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
           type="button"

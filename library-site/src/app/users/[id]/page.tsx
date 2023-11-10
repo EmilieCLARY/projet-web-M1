@@ -1,8 +1,7 @@
 'use client';
 
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useParams } from 'next/navigation';
-import Link from 'next/link';
 import { Navbar } from '../../layout';
 import { deleteUserById, useUserProviderById } from '@/hooks';
 

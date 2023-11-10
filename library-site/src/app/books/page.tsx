@@ -114,7 +114,7 @@ const BooksPage: FC = () => {
     );
 
   return (
-    <main className="h-screen bg-gradient-to-r from-cyan-200 to-blue-300">
+    <main className="min-h-screen bg-gradient-to-r from-cyan-200 to-blue-300">
       <Navbar />
       <div className="flex flex-col items-center mt-7">
         <h1 className="text-5xl font-bold mb-10 text-sky-950">Books</h1>

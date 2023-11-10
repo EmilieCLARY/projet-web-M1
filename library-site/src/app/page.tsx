@@ -10,7 +10,7 @@ const Home: FC = (): ReactElement => {
   }, []);
 
   return (
-    <main className="bg-cyan-200">
+    <main className="min-h-screen bg-gradient-to-r from-cyan-200 to-blue-300">
       <Navbar />
       <div className="flex min-h-screen flex-col justify-center items-center">
         <h2 className="text-lg text-sky-950">Welcome to</h2>
