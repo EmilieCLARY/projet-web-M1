@@ -89,7 +89,8 @@ const AuthorsPage: FC = () => {
           : b.numberOfBooks - a.numberOfBooks;
       }
       return 0;
-    });
+    })
+    .slice(1);
 
   const toggleSort = (field: string): void => {
     setSortField(field);
