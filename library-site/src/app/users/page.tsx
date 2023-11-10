@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 import React, { FC, useEffect, useState } from 'react';
 import { useUsersProviders, createNewUser } from '@/hooks';
 import { Navbar } from '../layout';
+import { currentUser } from '../login/page';
 
 const UsersPage: FC = () => {
   const { useListUsers } = useUsersProviders();

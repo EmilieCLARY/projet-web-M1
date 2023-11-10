@@ -2,6 +2,7 @@
 import './globals.css';
 import { ReactElement, ReactNode } from 'react';
 import * as React from 'react';
+import { currentUser } from './login/page';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,6 +23,9 @@ export const Navbar: React.FC = () => (
     <div className="flex flex-wrap justify-between items-center p-4">
       <a href="/" className="flex items-center text-white text-2xl mx-5">
         The Readers&apos; Oasis
+      </a>
+      <a className="flex items-center text-white text-2xl mx-5">
+        {currentUser.firstname} - {currentUser.lastname}
       </a>
       <div
         className="hidden w-full md:block md:w-auto mx-10"

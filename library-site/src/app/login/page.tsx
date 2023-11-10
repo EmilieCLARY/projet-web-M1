@@ -20,31 +20,37 @@ const LoginPage: FC = () => {
   }, []);
 
   function checkUser(userToTest: PlainUserModel) {
+    let isFound = false;
     users.map((user) => {
       // L'utilisateur existe déjà
       if(userToTest.firstname == user.firstname && userToTest.lastname == user.lastname) {
+        currentUser = user;
         window.location.href = '/';
-      }
-
-      // L'utilisateur n'existe pas et on propose de le créer
-      else {
-        if (userToTest.firstname == '' || userToTest.lastname == '') {
-            alert('Please fill all the fields');
-            return;
-        }
-        
-        else {
-          if(window.confirm('Are you sure you want to create an account with these information ?')) {
-            createNewUser(userToTest);
-            console.log('User created');
-            window.location.href = '/';
-          }
-          else {
-            console.log('User not created');
-          }
-        }
+        isFound = true;
+        return;
       }
     })
+    if(!isFound) {
+      // L'utilisateur n'existe pas et on propose de le créer
+      if (userToTest.firstname == '' || userToTest.lastname == '') {
+          alert('Please fill all the fields');
+          return;
+      }
+
+      else {
+        if(window.confirm('Are you sure you want to create an account with these information ?')) {
+          createNewUser(userToTest);
+          console.log('User created');
+          currentUser = userToTest;
+          window.location.href = '/';
+          return;
+        }
+        else {
+          console.log('User not created');
+          return;
+        }
+      }
+    } 
   }
 
   const handleLogin = (event: React.FormEvent): void => {
@@ -104,3 +110,8 @@ const LoginPage: FC = () => {
 };
 
 export default LoginPage;
+export var currentUser: PlainUserModel = {
+  id: '',
+  firstname: '',
+  lastname: ''
+};
