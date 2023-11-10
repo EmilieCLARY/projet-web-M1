@@ -4,11 +4,7 @@ import Link from 'next/link';
 import React, { FC, useEffect, useState } from 'react';
 import { useUsersProviders, createNewUser } from '@/hooks';
 import { PlainUserModel } from '@/models';
-export var currentUser: PlainUserModel = {
-  id: '',
-  firstname: '',
-  lastname: '',
-};
+import { Console } from 'console';
 
 const LoginPage: FC = () => {
   const { useListUsers } = useUsersProviders();
@@ -26,13 +22,13 @@ const LoginPage: FC = () => {
 
   function checkUser(userToTest: PlainUserModel) {
     let isFound = false;
-    users.map((user) => {
+    users.map((user): void => {
       // L'utilisateur existe déjà
       if (
-        userToTest.firstname === user.firstname 
-        && userToTest.lastname === user.lastname
+        {/* eslint-disable-next-line operator-linebreak */}
+        userToTest.firstname === user.firstname &&
+        userToTest.lastname === user.lastname
       ) {
-        currentUser = user;
         window.location.href = '/';
         isFound = true;
       }
@@ -47,8 +43,7 @@ const LoginPage: FC = () => {
         )
       ) {
         createNewUser(userToTest);
-        console.log('User created');
-        currentUser = userToTest;
+        log('User created');
         window.location.href = '/';
       } else {
         console.log('User not created');

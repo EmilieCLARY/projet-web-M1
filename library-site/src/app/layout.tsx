@@ -7,7 +7,6 @@ import * as React from 'react';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
-import { currentUser } from './login/page';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -80,11 +79,6 @@ export const Navbar: React.FC = () => (
     <div className="flex flex-wrap justify-between items-center p-4">
       <a href="/" className="flex items-center text-white text-2xl mx-5">
         The Readers&apos; Oasis
-      </a>
-      <a href="/" className="flex items-center text-white text-2xl mx-5">
-        {/* Encore une erreur de retour à la ligne obligatoire puis interdit */}
-        {/* eslint-disable-next-line react/jsx-one-expression-per-line */}
-        {currentUser.firstname} - {currentUser.lastname}
       </a>
       <BreadCrumbs />
       <div

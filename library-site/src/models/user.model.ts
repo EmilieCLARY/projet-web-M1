@@ -18,4 +18,3 @@ export type CreateUserModel = {
   lastname: string;
   books?: PlainBookModel[];
 };
-  
