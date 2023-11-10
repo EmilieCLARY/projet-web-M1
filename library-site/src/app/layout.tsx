@@ -27,7 +27,7 @@ function BreadCrumbs(): ReactElement {
   const { UseUserById } = useUserProviderById();
   const { user, load: loadUser } = UseUserById();
 
-  if (pageName === '') {
+  if (pageName === '' || pageName === undefined) {
     pageName = 'Home';
     breadcrumbs = [
       <Link underline="hover" key="1" color="white" href="/">
@@ -52,10 +52,16 @@ function BreadCrumbs(): ReactElement {
   }
 
   useEffect(() => {
-    loadBook(pageName2.toString());
-    loadAuthor(pageName2.toString());
-    loadUser(pageName2.toString());
-  });
+    if (pageName === 'books' && pageName2 !== '' && pageName2 !== 'vide') {
+      loadBook(pageName2.toString());
+    }
+    if (pageName === 'authors' && pageName2 !== '' && pageName2 !== 'vide') {
+      loadAuthor(pageName2.toString());
+    }
+    if (pageName === 'users' && pageName2 !== '' && pageName2 !== 'vide') {
+      loadUser(pageName2.toString());
+    }
+  }, [pageName, pageName2]);
 
   const handleName = (): string => {
     if (pageName === 'books') {
@@ -64,10 +70,12 @@ function BreadCrumbs(): ReactElement {
     if (pageName === 'authors') {
       return `${author.firstName} ${author.lastName}`;
     }
-    return `${user.firstname} ${user.lastname}`;
+    if (pageName === 'users') {
+      return `${user.firstname} ${user.lastname}`;
+    }
   };
 
-  if (pageName2 !== 'vide') {
+  if (pageName2 !== 'vide' && pageName2 !== undefined && pageName2 !== '') {
     breadcrumbs = [
       <Link underline="hover" key="1" color="white" href="/">
         Home

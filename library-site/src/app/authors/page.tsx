@@ -65,10 +65,10 @@ const AuthorsPage: FC = () => {
   const filteredAuthors = authors
     .map((author) => ({
       ...author,
-      numberOfBooks: GetNumberOfBooks(author.id)
+      numberOfBooks: GetNumberOfBooks(author.id),
     }))
     .filter((author) =>
-      `${author.firstName} ${author.lastName}`
+     `${author.firstName} ${author.lastName}`
         .toLowerCase()
         .includes(searchTerm.toLowerCase()),
     )

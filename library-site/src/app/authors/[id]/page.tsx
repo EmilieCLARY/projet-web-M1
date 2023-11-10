@@ -28,7 +28,7 @@ const AuthorDetailsPage: FC = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [name, setName] = useState('');
   const [writtenOn, setWrittenOn] = useState('');
-  const [genre, setGenre] = useState('');
+  const [genre, setGenre] = useState<string[]>([]);
 
   // Si on les enlève, la fonctionnalité ne marche plus
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -56,7 +56,7 @@ const AuthorDetailsPage: FC = () => {
     loadAuthor(id.toString());
     loadBooks();
     loadGenres();
-  }, []);
+  });
 
   useEffect(() => {
     document.title = `Author - ${author.firstName} ${author.lastName}`;
@@ -92,7 +92,7 @@ const AuthorDetailsPage: FC = () => {
       name,
       author: myAuthor,
       writtenOn,
-      genres: [genre],
+      genres: genre as unknown as string[],
     };
 
     if (newBook.author && newBook.name && newBook.writtenOn && newBook.genres) {
@@ -347,18 +347,28 @@ const AuthorDetailsPage: FC = () => {
             />
           </label>
           <label htmlFor="genre" className="block mb-2 text-white">
-            Select Genre
-            <select
-              value={genre}
-              className="flex mt-1 p-2 w-2/3 border-sky-950 text-black rounded-lg bg-white"
-              onChange={(e): void => setGenre(e.target.value)}
-            >
+            Select Genres
+            <div className="flex flex-col">
               {genres.map((item) => (
-                <option key={item.id} value={item.name}>
-                  {item.name}
-                </option>
+                <label key={item.id} className="inline-flex items-center mt-3">
+                  <input
+                    type="checkbox"
+                    className="form-checkbox h-5 w-5 text-gray-600"
+                    value={item.name}
+                    onChange={(e): void => {
+                      if (e.target.checked) {
+                        setGenre((prev) => [...prev, e.target.value]);
+                      } else {
+                        setGenre((prev) =>
+                         prev.filter((genre) => genre !== e.target.value),
+                        );
+                      }
+                    }}
+                  />
+                  <span className="ml-2 text-gray-700">{item.name}</span>
+                </label>
               ))}
-            </select>
+            </div>
           </label>
           <div className="flex justify-between">
             <button
