@@ -5,9 +5,7 @@ import axios from 'axios';
 export const deleteUserById = async (id: string): Promise<void> => {
   try {
     // Make a DELETE request to the /user/{id} endpoint
-    const response = await axios.delete(
-      `${process.env.NEXT_PUBLIC_API_URL}/user/${id}`,
-    );
+    await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/user/${id}`);
 
     // Redirect to the /users page
     window.location.href = '/users';

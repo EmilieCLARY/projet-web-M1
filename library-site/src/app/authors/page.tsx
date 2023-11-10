@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import Link from 'next/link';
 import Modal from 'react-modal';
@@ -67,11 +67,14 @@ const AuthorsPage: FC = () => {
       ...author,
       numberOfBooks: GetNumberOfBooks(author.id),
     }))
-    .filter((author) =>
-      // eslint-disable-next-line implicit-arrow-linebreak
-      `${author.firstName} ${author.lastName}`
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase()),
+    .filter(
+      (author) =>
+        // Erreur insolvable conflit prettier/eslint
+        // eslint-disable-next-line implicit-arrow-linebreak
+        `${author.firstName} ${author.lastName}`
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase()),
+      // eslint-disable-next-line function-paren-newline
     )
     .sort((a, b) => {
       if (sortField === 'firstName') {
@@ -147,6 +150,7 @@ const AuthorsPage: FC = () => {
       </div>
       <div className="flex justify-around flex-wrap ">
         {filteredAuthors.map((author) => (
+          // Warning insolvable (image pourtant nécessaire pour l'auteur)
           <div className="w-full max-w-sm border border-gray-200 rounded-lg bg-sky-950 shadow dark:border-gray-700 m-10">
             <div className="flex flex-col items-center pb-10">
               <img

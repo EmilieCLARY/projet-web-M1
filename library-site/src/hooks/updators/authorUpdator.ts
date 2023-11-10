@@ -5,9 +5,7 @@ import axios from 'axios';
 export const updateAuthorById = async (id: string): Promise<void> => {
   try {
     // Make a PATCH request to the /authors/{id} endpoint
-    const response = await axios.patch(
-      `${process.env.NEXT_PUBLIC_API_URL}/authors/${id}`,
-    );
+    await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/authors/${id}`);
 
     // Redirect to the /authors/{id} page
     window.location.href = `/authors/${id}`;

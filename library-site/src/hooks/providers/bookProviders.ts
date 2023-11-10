@@ -20,6 +20,8 @@ export const useListBooks = (): UseListBooksProvider => {
     axios
       .get(`${process.env.NEXT_PUBLIC_API_URL}/books`)
       .then((data) => setBooks(data.data))
+      // Log the error to the console
+      // eslint-disable-next-line no-console
       .catch((err) => console.error(err));
   };
 

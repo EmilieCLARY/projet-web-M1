@@ -5,9 +5,7 @@ import axios from 'axios';
 export const deleteBookById = async (id: string): Promise<void> => {
   try {
     // Make a DELETE request to the /books/{id} endpoint
-    const response = await axios.delete(
-      `${process.env.NEXT_PUBLIC_API_URL}/books/${id}`,
-    );
+    await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/books/${id}`);
 
     // Redirect to the /books page
     window.location.href = '/books';
@@ -27,9 +25,7 @@ export const deleteBookFromAuthorById = async (
 ): Promise<void> => {
   try {
     // Make a DELETE request to the /books/{idBook} endpoint
-    const response = await axios.delete(
-      `${process.env.NEXT_PUBLIC_API_URL}/books/${idBook}`,
-    );
+    await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/books/${idBook}`);
 
     // Redirect to the author's page
     window.location.href = `${idAuthor}`;

@@ -95,3 +95,5 @@ LES USERS :
 
 Nous avons eu énormément de conflits entre prettier et eslint, du genre : L'un demande de mettre une instruction à la ligne, et une fois ce dernier mis à la ligne nous avons des erreurs de l'autres.
 Nous avons donc dû disable eslint à certains endroits.
+
+Cependant nous ne pouvions pas disable les 'warnings' au niveau des images des auteurs dans les fichiers pages.tsx. Nous avons décidé de quand même laisser les warnings car les images sont tout de même nécessaires au design du site et si nous voulions retirer ces warnings il fallait importer d'autres librairies que celles du projet.

@@ -3,8 +3,8 @@
 import React, { FC, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from '@mui/material/Link';
-import { Navbar } from '../../layout';
 import { useBookProviderById, deleteBookById } from '@/hooks';
+import { Navbar } from '../../layout';
 
 const BookDetailsPage: FC = () => {
   const { id } = useParams();
@@ -40,7 +40,7 @@ const BookDetailsPage: FC = () => {
       </h1>
       <div className="flex justify-center items-center">
         <div className="w-1/3 my-10 border border-gray-200 rounded-lg bg-sky-950 flex flex-col items-center my-2 flex-start">
-          {/* eslint-disable-next-next no-img-element */}
+          {/* Warning insolvable (image pourtant nécessaire pour l'auteur) */}
           <img
             className="w-auto h-80 mt-10 rounded-2xl shadow-lg"
             alt=""

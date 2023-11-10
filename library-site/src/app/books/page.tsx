@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { FC, useState, useEffect } from 'react';
 import Link from 'next/link';
@@ -8,9 +8,9 @@ import {
   useAuthorsProviders,
   useGenresProviders,
 } from '@/hooks';
-import { Navbar } from '../layout';
 import { useCreateNewBook } from '@/hooks/creators/bookCreator';
 import { AuthorModel } from '@/models';
+import { Navbar } from '../layout';
 
 const BooksPage: FC = () => {
   const { useListBooks } = useBooksProviders();
@@ -267,9 +267,7 @@ const BooksPage: FC = () => {
                       } else {
                         // Même problème de demande de retour à la ligne, puis interdiction
                         // eslint-disable-next-line prettier/prettier
-                        setGenre((prev) => prev.filter((genre2) => genre2 !== e.target.value),
-                          // eslint-disable-function-paren-newline
-                        );
+                        setGenre((prev) => prev.filter((genre2) => genre2 !== e.target.value));
                       }
                     }}
                   />

@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import Link from 'next/link';
 import Modal from 'react-modal';
@@ -50,7 +50,7 @@ const UsersPage: FC = () => {
     setIsModalOpen(false);
   };
 
-  const handleSortAndFilter = (key): void => {
+  const handleSortAndFilter = (key: React.SetStateAction<string>): void => {
     setSortKey(key);
     setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
     setSearchTerm('');

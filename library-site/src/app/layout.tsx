@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 /* eslint-disable prefer-destructuring */
 // Destructuring is not working here (pageName and pageName2)
@@ -61,7 +61,7 @@ function BreadCrumbs(): ReactElement {
     if (pageName === 'users' && pageName2 !== '' && pageName2 !== 'vide') {
       loadUser(pageName2.toString());
     }
-  }, [pageName, pageName2]);
+  });
 
   const handleName = (): string => {
     if (pageName === 'books') {
@@ -73,6 +73,7 @@ function BreadCrumbs(): ReactElement {
     if (pageName === 'users') {
       return `${user.firstname} ${user.lastname}`;
     }
+    return ''; // Default return statement
   };
 
   if (pageName2 !== 'vide' && pageName2 !== undefined && pageName2 !== '') {

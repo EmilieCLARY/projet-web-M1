@@ -8,7 +8,7 @@ import {
   useBooksProviders,
   deleteAuthorById,
   useAuthorProviderById,
-  updateAuthorById,
+  // updateAuthorById, Tentative de modification d'un author : non appelée
   deleteBookFromAuthorById,
   useGenresProviders,
 } from '@/hooks';
@@ -24,7 +24,6 @@ const AuthorDetailsPage: FC = () => {
   const { books, load: loadBooks } = useListBooks();
   const { useListGenres } = useGenresProviders();
   const { genres, load: loadGenres } = useListGenres();
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [name, setName] = useState('');
   const [writtenOn, setWrittenOn] = useState('');
@@ -76,12 +75,13 @@ const AuthorDetailsPage: FC = () => {
     }
   };
 
-  const handleEdit = async (e: React.FormEvent): Promise<void> => {
+  // Tentative de modification d'un author : non appelée
+  /* const handleEdit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
 
     await updateAuthorById(id.toString());
     setIsModalOpen(false);
-  };
+  }; */
 
   function handleBookDelete(idBook: string): void {
     // On laisse la confirmation de suppression
@@ -108,7 +108,7 @@ const AuthorDetailsPage: FC = () => {
       // eslint-disable-next-line no-alert
       alert('Please fill all the fields');
     }
-    setIsModalOpen(false);
+    setIsAddModalOpen(false);
   }
 
   function GetNumberOfBooks(authorId: string): number {
@@ -161,7 +161,8 @@ const AuthorDetailsPage: FC = () => {
       </div>
       {author && (
         <div className="flex flex-row justify-around mt-10">
-          <div className="w-1/3 my-10 border border-gray-200 rounded-lg bg-sky-950 flex flex-col items-center my-2">
+          <div className="w-1/3 my-10 border border-gray-200 rounded-lg bg-sky-950 flex flex-col items-center">
+            {/* Erreur insolvable (image nécéssaire pour l'author) */}
             <img
               className="w-auto h-72 mt-10 mb-6 rounded-2xl shadow-lg"
               alt=""
@@ -242,7 +243,7 @@ const AuthorDetailsPage: FC = () => {
           </div>
         </div>
       )}
-      
+
       <Modal
         isOpen={isAddModalOpen}
         ariaHideApp={false}
@@ -308,9 +309,7 @@ const AuthorDetailsPage: FC = () => {
                       } else {
                         // Même problème de demande de retour à la ligne, puis interdiction
                         // eslint-disable-next-line prettier/prettier
-                        setGenre((prev) => prev.filter((genre2) => genre2 !== e.target.value),
-                          // eslint-disable-function-paren-newline
-                        );
+                        setGenre((prev) => prev.filter((genre2) => genre2 !== e.target.value));
                       }
                     }}
                   />

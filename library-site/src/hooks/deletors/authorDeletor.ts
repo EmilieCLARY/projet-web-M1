@@ -5,9 +5,7 @@ import axios from 'axios';
 export const deleteAuthorById = async (id: string): Promise<void> => {
   try {
     // Make a DELETE request to the /authors/{id} endpoint
-    const response = await axios.delete(
-      `${process.env.NEXT_PUBLIC_API_URL}/authors/${id}`,
-    );
+    await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/authors/${id}`);
 
     // Redirect to the /authors page
     window.location.href = '/authors';
