@@ -8,9 +8,9 @@ import {
 import {
   CreateAuthorRepositoryInput,
   PlainAuthorRepositoryOutput,
+  UpdateAuthorRepositoryInput,
 } from './author.repository.type';
 import { adaptAuthorEntityToPlainAuthorModel } from './author.utils';
-import { UpdateAuthorRepositoryInput } from '../authors/author.repository.type';
 
 @Injectable()
 export class AuthorRepository extends Repository<Author> {
@@ -78,7 +78,9 @@ export class AuthorRepository extends Repository<Author> {
    * @param input Author's data
    * @returns Updated author
    */
-  public async updateById(input: UpdateAuthorRepositoryInput): Promise<PlainAuthorRepositoryOutput>{
+  public async updateById(
+    input: UpdateAuthorRepositoryInput,
+  ): Promise<PlainAuthorRepositoryOutput> {
     const id = await this.dataSource.transaction(async (manager) => {
       const author = await this.findOne({ where: { id: input.id } });
       if (!author) {

@@ -10,12 +10,15 @@ export const useCreateNewBook = async (
   book: CreateBookModel,
 ): Promise<CreateBookProvider> => {
   try {
-    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/books`, {
-      author: book.author,
-      name: book.name,
-      writtenOn: book.writtenOn,
-      genres: book.genres,
-    });
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/books`,
+      {
+        author: book.author,
+        name: book.name,
+        writtenOn: book.writtenOn,
+        genres: book.genres,
+      },
+    );
 
     window.location.href = '/books';
 
@@ -27,15 +30,19 @@ export const useCreateNewBook = async (
 };
 
 export const useCreateNewBookFromAuthor = async (
-  book: CreateBookModel, idAuthor: string
+  book: CreateBookModel,
+  idAuthor: string,
 ): Promise<CreateBookProvider> => {
   try {
-    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/books`, {
-      author: book.author,
-      name: book.name,
-      writtenOn: book.writtenOn,
-      genres: book.genres,
-    });
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/books`,
+      {
+        author: book.author,
+        name: book.name,
+        writtenOn: book.writtenOn,
+        genres: book.genres,
+      },
+    );
 
     window.location.href = `${idAuthor}`;
 

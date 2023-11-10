@@ -1,15 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import {
-  NotFoundError,
-  InternalServerError,
-} from 'library-api/src/common/errors';
-import {
-  Book,
-  BookId,
-  BookGenre,
-  Genre,
-  Author,
-} from 'library-api/src/entities';
+import { NotFoundError } from 'library-api/src/common/errors';
+import { Book, BookId, BookGenre, Genre } from 'library-api/src/entities';
 import {
   BookRepositoryOutput,
   PlainBookRepositoryOutput,
@@ -105,13 +96,15 @@ export class BookRepository extends Repository<Book> {
         });
 
         await manager.save<BookGenre>(
-          newGenres.map((genre) =>
-            manager.create<BookGenre>(BookGenre, {
+          // Même erreur de retour à la ligne obligatoire puis une fois enlevé est interdit
+          // eslint-disable-next-line prettier/prettier
+          newGenres.map((genre) => manager.create<BookGenre>(BookGenre, {
               id: v4(),
               book: { id: newBook.id },
               genre,
-            }),
-          ),
+              // Même erreur de retour à la ligne obligatoire puis une fois enlevé est interdit
+              // eslint-disable-next-line prettier/prettier
+            })),
         );
       }
 

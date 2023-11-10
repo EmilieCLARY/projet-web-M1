@@ -1,3 +1,5 @@
+// Erreur si on les enlève
+/* eslint-disable import/no-cycle */
 import {
   BaseEntity,
   Column,

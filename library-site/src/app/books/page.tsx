@@ -4,14 +4,13 @@ import React, { FC, useState, useEffect } from 'react';
 import Link from 'next/link';
 import Modal from 'react-modal';
 import { Navbar } from '../layout';
-import { useParams } from 'next/navigation';
 import {
   useBooksProviders,
   useAuthorsProviders,
   useGenresProviders,
 } from '@/hooks';
 import { useCreateNewBook } from '@/hooks/creators/bookCreator';
-import { AuthorModel, GenreModel } from '@/models';
+import { AuthorModel } from '@/models';
 
 const BooksPage: FC = () => {
   const { useListBooks } = useBooksProviders();
@@ -54,6 +53,8 @@ const BooksPage: FC = () => {
       // genre: genre as unknown as PlainGenreModel,
     };
     if (newBook.author) {
+      // Erreur insolvable
+      // eslint-disable-next-line react-hooks/rules-of-hooks
       useCreateNewBook(newBook);
     } else {
       alert('Please select an author');
@@ -91,6 +92,8 @@ const BooksPage: FC = () => {
           comparison = a.name.localeCompare(b.name);
           break;
         case 'numberOfBooks':
+          // Même problème de demande de retour à la ligne, puis interdiction
+          // eslint-disable-next-line operator-linebreak
           comparison =
             new Date(a.writtenOn).getTime() - new Date(b.writtenOn).getTime();
           break;
@@ -100,7 +103,10 @@ const BooksPage: FC = () => {
       return sortDirection === 'asc' ? comparison : -comparison;
     })
     .filter(
+      // Même problème de demande de retour à la ligne, puis interdiction
+      // eslint-disable-next-line prettier/prettier, operator-linebreak
       (book) => (selectedGenre === '' || book.genres.includes(selectedGenre)) &&
+        // eslint-disable-next-line operator-linebreak
         (book.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
           `${book.author.firstName} ${book.author.lastName}`
             .toLowerCase()

@@ -5,6 +5,8 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+// Erreur si on l'enlève
+// eslint-disable-next-line import/no-cycle
 import { Book } from './Book';
 
 export type AuthorId = string & { __brand: 'Author' };

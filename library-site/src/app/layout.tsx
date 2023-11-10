@@ -11,12 +11,8 @@ import { currentUser } from './login/page';
 
 const inter = Inter({ subsets: ['latin'] });
 
-function CustomSeparator(): ReactElement {
-  let pageName = '';
-  if (typeof window !== 'undefined') {
-    pageName = window.location.pathname.split('/')[1];
-  }
-
+function BreadCrumbs(): ReactElement {
+  let pageName = window.location.pathname.split('/')[1];
   let breadcrumbs = [];
 
   if (pageName === '') {
@@ -36,10 +32,9 @@ function CustomSeparator(): ReactElement {
       </Link>,
     ];
   }
-  let pageName2 = '';
-  if (typeof window !== 'undefined') {
-    pageName2 = window.location.pathname.split('/')[2];
-  }
+
+  const pageName2 = window.location.pathname.split('/')[2];
+
   if (pageName2 !== '' && pageName2 !== undefined) {
     breadcrumbs = [
       <Link underline="hover" key="1" color="white" href="/">
@@ -91,7 +86,7 @@ export const Navbar: React.FC = () => (
         {/* eslint-disable-next-line react/jsx-one-expression-per-line */}
         {currentUser.firstname} - {currentUser.lastname}
       </a>
-      <CustomSeparator />
+      <BreadCrumbs />
       <div
         className="hidden w-full md:block md:w-auto mx-10"
         id="navbar-default"

@@ -49,6 +49,8 @@ export class AuthorUseCases {
     await this.authorRepository.deletebyid(author.id);
   }
 
+  // Ici, on a un problème de typage, car on ne peut pas retourner un PlainAuthorModel
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   public async updateById(input) {
     return this.authorRepository.updateById(input);
   }

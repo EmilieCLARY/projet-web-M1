@@ -36,9 +36,7 @@ type UseBookProviderById = {
 };
 
 export const UseBookById = (): UseBookProviderById => {
-  const [book, setBook] = useState<PlainBookModel>(
-    {} as PlainBookModel,
-  );
+  const [book, setBook] = useState<PlainBookModel>({} as PlainBookModel);
 
   const fetchBooks = (id: string): void => {
     axios

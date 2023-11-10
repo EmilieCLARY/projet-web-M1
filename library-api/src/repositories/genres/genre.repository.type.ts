@@ -1,4 +1,4 @@
 import { GenreModel } from 'library-api/src/models/genre.model';
 
 export type GenreRepositoryOutput = GenreModel;
-export type GenreRepositoryInput = Omit<GenreModel,"id">;
+export type GenreRepositoryInput = Omit<GenreModel, 'id'>;

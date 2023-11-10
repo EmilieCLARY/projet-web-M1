@@ -22,6 +22,7 @@ const UsersPage: FC = () => {
       bottom: 'auto',
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
+      background: 'rgb(8 47 73)',
     },
   };
 
@@ -51,28 +52,28 @@ const UsersPage: FC = () => {
       <h1 className="flex justify-around items-center text-sky-950 text-5xl font-bold my-6">
         Readers&apos; List
       </h1>
-      <button
-        type="button"
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mb-4"
-        onClick={(): void => setIsModalOpen(true)}
-      >
-        Add a new Reader
-      </button>
+      <div className="flex justify-around">
+        <button
+          type="button"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mb-4"
+          onClick={(): void => setIsModalOpen(true)}
+        >
+          Add a new Reader
+        </button>
+      </div>
       <div className="flex justify-around flex-wrap ">
         {users.map((user) => (
-          <div className="w-full max-w-sm border border-gray-200 rounded-lg bg-sky-950 shadow dark:border-gray-700 m-10">
-            <div className="flex flex-col items-center pb-10">
-              <h5
-                className="mb-1 text-xl font-medium text-gray-900 text-white"
-                id="authorName"
-              >
-                <Link href={`/users/${user.id}`} className="hover:underline">
-                  {user.firstname}
-                  {'\u00A0'}
-                  {user.lastname}
-                </Link>
-              </h5>
-            </div>
+          <div className="w-full flex flex-col items-center py-5 max-w-sm border border-gray-200 rounded-lg bg-sky-950 m-10 hover:bg-blue-700">
+            <h5
+              className="mb-1 text-xl font-medium text-gray-900 text-white text-center"
+              id="authorName"
+            >
+              <Link href={`/users/${user.id}`} className="hover:underline">
+                {user.firstname}
+                {'\u00A0'}
+                {user.lastname}
+              </Link>
+            </h5>
           </div>
         ))}
       </div>

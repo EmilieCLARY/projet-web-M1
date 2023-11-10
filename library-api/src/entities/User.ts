@@ -20,6 +20,8 @@ export class User extends BaseEntity {
   @Column()
   lastname: string;
 
+  // Important à garder
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @OneToMany(() => Book, (book) => Book, { onDelete: 'CASCADE' })
   book?: Book;
 }

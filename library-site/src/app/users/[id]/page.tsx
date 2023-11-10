@@ -4,16 +4,12 @@ import React, { FC, useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { Navbar } from '../../layout';
-import {
-  deleteUserById,
-  useUserProviderById,
-} from '@/hooks';
+import { deleteUserById, useUserProviderById } from '@/hooks';
 
 const UserDetailsPage: FC = () => {
   const { id } = useParams();
-  const { UseUserById } =   useUserProviderById();
+  const { UseUserById } = useUserProviderById();
   const { user, load: loadUser } = UseUserById();
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     loadUser(id.toString());
@@ -24,17 +20,13 @@ const UserDetailsPage: FC = () => {
   }, []);
 
   const handleDelete = (): void => {
-    if (
-      window.confirm(
-        'Are you sure you want to delete this user ?',
-      )
-    ) {
+    if (window.confirm('Are you sure you want to delete this user ?')) {
       deleteUserById(id.toString());
     }
   };
 
   return (
-    <main>
+    <main className="h-screen bg-gradient-to-r from-cyan-200 to-blue-300">
       <Navbar />
       <div className="flex justify-around flex-wrap ">
         <div className="w-full max-w-sm border border-gray-200 rounded-lg bg-sky-950 shadow dark:border-gray-700 m-10">

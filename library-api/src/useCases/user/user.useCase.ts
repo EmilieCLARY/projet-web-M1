@@ -4,7 +4,7 @@ import { UserRepository } from 'library-api/src/repositories';
 import {
   UserUseCasesOutput,
   PlainUserUseCasesOutput,
-  CreateUserUseCasesInput
+  CreateUserUseCasesInput,
 } from 'library-api/src/useCases/user/user.useCase.type';
 
 @Injectable()
@@ -34,7 +34,9 @@ export class UserUseCases {
    * @Param input Data to create the new user
    * @returns Created User
    */
-  public async create(input: CreateUserUseCasesInput): Promise<PlainUserUseCasesOutput> {
+  public async create(
+    input: CreateUserUseCasesInput,
+  ): Promise<PlainUserUseCasesOutput> {
     return this.userRepository.createUser(input);
   }
 

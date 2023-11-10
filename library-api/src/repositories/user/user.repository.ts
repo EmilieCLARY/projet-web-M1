@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { NotFoundError, InternalServerError } from 'library-api/src/common/errors';
+import {
+  NotFoundError,
+  InternalServerError,
+} from 'library-api/src/common/errors';
 import { User, UserId } from 'library-api/src/entities';
 import {
   UserRepositoryOutput,
@@ -49,7 +52,9 @@ export class UserRepository extends Repository<User> {
    * @param input Data to create the new user
    * @returns Created user
    */
-  public async createUser(input: CreateUserRepositoryInput): Promise<PlainUserRepositoryOutput> {
+  public async createUser(
+    input: CreateUserRepositoryInput,
+  ): Promise<PlainUserRepositoryOutput> {
     const id = await this.dataSource.transaction(async (manager) => {
       const [newUser] = await manager.save<User>([
         manager.create<User>(User, { ...input }),

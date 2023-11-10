@@ -26,6 +26,7 @@ export class PlainAuthorPresenter {
 
 export class AuthorPresenter {
   firstName: string;
+
   lastName: string;
 
   private constructor(data: AuthorPresenter) {
