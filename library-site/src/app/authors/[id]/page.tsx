@@ -10,7 +10,11 @@ import {
   deleteAuthorById,
   useAuthorProviderById,
   updateAuthorById,
+  deleteBookFromAuthorById,
+  useGenresProviders,
 } from '@/hooks';
+import { useCreateNewBookFromAuthor } from '@/hooks/creators/bookCreator';
+import { PlainAuthorModel } from '@/models';
 
 const AuthorDetailsPage: FC = () => {
   const { id } = useParams();
@@ -18,10 +22,16 @@ const AuthorDetailsPage: FC = () => {
   const { author, load: loadAuthor } = UseAuthorById();
   const { useListBooks } = useBooksProviders();
   const { books, load: loadBooks } = useListBooks();
+  const { useListGenres } = useGenresProviders();
+  const { genres, load: loadGenres } = useListGenres();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [photoUrl, setPhotoUrl] = useState('');
+  const [name, setName] = useState('');
+  const [writtenOn, setWrittenOn] = useState('');
+  const [genre, setGenre] = useState('');
 
   const customStyles = {
     content: {
@@ -39,6 +49,7 @@ const AuthorDetailsPage: FC = () => {
   useEffect(() => {
     loadAuthor(id.toString());
     loadBooks();
+    loadGenres();
   }, []);
 
   useEffect(() => {
@@ -62,6 +73,28 @@ const AuthorDetailsPage: FC = () => {
     setIsModalOpen(false);
   };
 
+  function handleBookDelete(idBook: string): void {
+    if (window.confirm('Are you sure you want to delete this book ?')) {
+      deleteBookFromAuthorById(idBook, id.toString());
+    }
+  }
+
+  function handleBookAdd(myAuthor: PlainAuthorModel): void {
+    const newBook = {
+      name,
+      author: myAuthor,
+      writtenOn,
+      genres: [genre],
+    };
+
+    if (newBook.author && newBook.name && newBook.writtenOn && newBook.genres) {
+      useCreateNewBookFromAuthor(newBook, id.toString());
+    } else {
+      alert('Please fill all the fields');
+    }
+    setIsModalOpen(false);
+  };
+
   function GetNumberOfBooks(authorId: string): number {
     const numberOfBooks = books.filter(
       (book) => book.author.id === authorId,
@@ -79,6 +112,7 @@ const AuthorDetailsPage: FC = () => {
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
           type="button"
+          onClick={(): void => setIsAddModalOpen(true)}
         >
           Add a Book
         </button>
@@ -149,6 +183,7 @@ const AuthorDetailsPage: FC = () => {
                       <button
                         type="button"
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                        onClick={() => handleBookDelete(book.id.toString())}
                       >
                         x
                       </button>
@@ -211,6 +246,78 @@ const AuthorDetailsPage: FC = () => {
               type="button"
               className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"
               onClick={(): void => setIsModalOpen(false)}
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </Modal>
+      <Modal
+        isOpen={isAddModalOpen}
+        ariaHideApp={false}
+        onRequestClose={(): void => setIsAddModalOpen(false)}
+        contentLabel="Ajouter Livre"
+        style={customStyles}
+      >
+        <h1 className="flex justify-center text-xl mb-4 text-white">
+          Add a new Book
+        </h1>
+        <form onSubmit={(e) => { e.preventDefault(); handleBookAdd(author); }}>
+          <label htmlFor="author" className="block mb-2 text-white">
+            Select Author
+            <input
+              type="text"
+              readOnly
+              placeholder="..."
+              value={author.firstName + ' ' + author.lastName}
+              className="flex mt-1 p-2 w-2/3 border-sky-950 text-black bg-white rounded-lg"
+            />
+          </label>
+          <label htmlFor="name" className="block mb-2 text-white">
+            Book Name
+            <input
+              type="text"
+              placeholder="..."
+              value={name}
+              onChange={(e): void => setName(e.target.value)}
+              className="flex mt-1 p-2 w-2/3 border-sky-950 text-black bg-white rounded-lg"
+            />
+          </label>
+          <label htmlFor="writtenOn" className="block mb-2 text-white">
+            Written On
+            <input
+              type="text"
+              placeholder="YYYY"
+              value={writtenOn}
+              onChange={(e): void => setWrittenOn(e.target.value)}
+              className="flex mt-1 p-2 w-2/3 border-sky-950 text-black bg-white rounded-lg"
+            />
+          </label>
+          <label htmlFor="genre" className="block mb-2 text-white">
+            Select Genre
+            <select
+              value={genre}
+              className="flex mt-1 p-2 w-2/3 border-sky-950 text-black rounded-lg bg-white"
+              onChange={(e): void => setGenre(e.target.value)}
+            >
+              {genres.map((item) => (
+                <option key={item.id} value={item.name}>
+                  {item.name}
+                </option>
+              ))}
+            </select>
+          </label>
+          <div className="flex justify-between">
+            <button
+              type="submit"
+              className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"
+            >
+              Add Book
+            </button>
+            <button
+              type="button"
+              className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"
+              onClick={(): void => setIsAddModalOpen(false)}
             >
               Cancel
             </button>

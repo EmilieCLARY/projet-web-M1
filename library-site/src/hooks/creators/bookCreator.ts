@@ -25,3 +25,23 @@ export const useCreateNewBook = async (
     throw err;
   }
 };
+
+export const useCreateNewBookFromAuthor = async (
+  book: CreateBookModel, idAuthor: string
+): Promise<CreateBookProvider> => {
+  try {
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/books`, {
+      author: book.author,
+      name: book.name,
+      writtenOn: book.writtenOn,
+      genres: book.genres,
+    });
+
+    window.location.href = `${idAuthor}`;
+
+    return response.data;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
