@@ -13,8 +13,10 @@ const Home: FC = (): ReactElement => {
     <main className="min-h-screen bg-gradient-to-r from-cyan-200 to-blue-300">
       <Navbar />
       <div className="flex min-h-screen flex-col justify-center items-center">
-        <h2 className="text-lg text-sky-950">Welcome to</h2>
-        <h1 className="text-5xl font-bold text-sky-950">The Readers Oasis</h1>
+        <div className="bg-white rounded-lg shadow-lg p-6 m-8 min-w-max max-w-xs border-2 border-sky-950">
+          <h2 className="text-lg text-sky-950 text-center">Welcome to</h2>
+          <h1 className="text-5xl font-bold text-sky-950">The Readers&apos; Oasis</h1>
+        </div>
       </div>
     </main>
   );

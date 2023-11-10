@@ -4,7 +4,6 @@ import React, { FC, useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Modal from 'react-modal';
 import Link from 'next/link';
-import { Navbar } from '../../layout';
 import {
   useBooksProviders,
   deleteAuthorById,
@@ -15,6 +14,7 @@ import {
 } from '@/hooks';
 import { useCreateNewBookFromAuthor } from '@/hooks/creators/bookCreator';
 import { PlainAuthorModel } from '@/models';
+import { Navbar } from '../../layout';
 
 const AuthorDetailsPage: FC = () => {
   const { id } = useParams();
@@ -66,6 +66,8 @@ const AuthorDetailsPage: FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleDelete = (): void => {
     if (
+      // On laisse la confirmation de suppression
+      // eslint-disable-next-line no-alert
       window.confirm(
         'Are you sure you want to delete this author and all of his books ?',
       )
@@ -82,6 +84,8 @@ const AuthorDetailsPage: FC = () => {
   };
 
   function handleBookDelete(idBook: string): void {
+    // On laisse la confirmation de suppression
+    // eslint-disable-next-line no-alert
     if (window.confirm('Are you sure you want to delete this book ?')) {
       deleteBookFromAuthorById(idBook, id.toString());
     }
@@ -100,6 +104,8 @@ const AuthorDetailsPage: FC = () => {
       // eslint-disable-next-line react-hooks/rules-of-hooks
       useCreateNewBookFromAuthor(newBook, id.toString());
     } else {
+      // On laisse la confirmation de suppression
+      // eslint-disable-next-line no-alert
       alert('Please fill all the fields');
     }
     setIsModalOpen(false);
@@ -148,14 +154,7 @@ const AuthorDetailsPage: FC = () => {
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
           type="button"
-          onClick={(): void => console.log('edit')}
-        >
-          Edit author
-        </button>
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-          type="button"
-          onClick={(): void => setIsModalOpen(true)}
+          onClick={(): void => handleDelete()}
         >
           Delete author
         </button>
@@ -243,63 +242,7 @@ const AuthorDetailsPage: FC = () => {
           </div>
         </div>
       )}
-      <Modal
-        isOpen={isModalOpen}
-        ariaHideApp={false}
-        onRequestClose={(): void => setIsModalOpen(false)}
-        contentLabel="Modifier Auteur"
-        style={customStyles}
-      >
-        <h1 className="flex justify-center text-lg mb-4 text-white text-2xl">
-          Modify Author
-        </h1>
-        <hr className="mb-2" />
-        <form onSubmit={handleEdit}>
-          <label htmlFor="firstName" className="block mb-2 text-white">
-            First Name
-            <input
-              id="firstName"
-              type="text"
-              placeholder={author.firstName}
-              onFocus={(e): void => setFirstName(e.target.value)}
-              className="flex mt-1 p-2 w-2/3 border-sky-950 text-black rounded-lg"
-            />
-          </label>
-          <label htmlFor="lastName" className="block mb-2 text-white">
-            Last Name
-            <input
-              type="text"
-              placeholder={author.lastName}
-              onFocus={(e): void => setLastName(e.target.value)}
-              className="flex mt-1 p-2 w-2/3 border-sky-950 text-black rounded-lg"
-            />
-          </label>
-          <label htmlFor="photoURL" className="block mb-2 text-white">
-            Photo URL
-            <input
-              type="text"
-              placeholder={author.photoUrl}
-              onFocus={(e): void => setPhotoUrl(e.target.value)}
-              className="mt-1 p-2 w-full border-sky-950 text-black rounded-lg"
-            />
-          </label>
-          <div className="flex justify-between text-white">
-            <button
-              type="submit"
-              className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"
-            >
-              Modify Author
-            </button>
-            <button
-              type="button"
-              className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"
-              onClick={(): void => setIsModalOpen(false)}
-            >
-              Cancel
-            </button>
-          </div>
-        </form>
-      </Modal>
+      
       <Modal
         isOpen={isAddModalOpen}
         ariaHideApp={false}
@@ -346,26 +289,32 @@ const AuthorDetailsPage: FC = () => {
               className="flex mt-1 p-2 w-2/3 border-sky-950 text-black bg-white rounded-lg"
             />
           </label>
-          <label htmlFor="genre" className="block mb-2 text-white">
+          <label htmlFor="genre" className="block mb-2 text-white mt-6">
             Select Genres
-            <div className="flex flex-col">
+            <div className="flex flex-wrap justify-around items-center">
               {genres.map((item) => (
-                <label key={item.id} className="inline-flex items-center mt-3">
+                <label
+                  htmlFor="selectGenres"
+                  key={item.id}
+                  className="inline-flex items-center mt-3"
+                >
                   <input
                     type="checkbox"
-                    className="form-checkbox h-5 w-5 text-gray-600"
+                    className="form-checkbox h-5 w-5 text-white"
                     value={item.name}
                     onChange={(e): void => {
                       if (e.target.checked) {
                         setGenre((prev) => [...prev, e.target.value]);
                       } else {
-                        setGenre((prev) =>
-                         prev.filter((genre) => genre !== e.target.value),
+                        // Même problème de demande de retour à la ligne, puis interdiction
+                        // eslint-disable-next-line prettier/prettier
+                        setGenre((prev) => prev.filter((genre2) => genre2 !== e.target.value),
+                          // eslint-disable-function-paren-newline
                         );
                       }
                     }}
                   />
-                  <span className="ml-2 text-gray-700">{item.name}</span>
+                  <span className="ml-2 mr-10 text-white">{item.name}</span>
                 </label>
               ))}
             </div>

@@ -4,6 +4,7 @@ import { BookRepository } from 'library-api/src/repositories/books/book.reposito
 import { GenreRepository } from 'library-api/src/repositories/genres/genre.repository';
 import { UserRepository } from './user/user.repository';
 
+// Define an array of repository classes
 const repositories = [
   AuthorRepository,
   BookRepository,
@@ -11,8 +12,11 @@ const repositories = [
   UserRepository,
 ];
 
+// Define a NestJS module for the repositories
 @Module({
+  // Providers array tells NestJS to create instance of each repository and provide it for injection
   providers: [...repositories],
+  // The exports array tells NestJS to make these instances available for injection in other modules
   exports: [...repositories],
 })
 export class RepositoryModule {}

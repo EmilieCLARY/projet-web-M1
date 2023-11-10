@@ -12,43 +12,31 @@ import {
 } from './author.repository.type';
 import { adaptAuthorEntityToPlainAuthorModel } from './author.utils';
 
+// Define a service that provides methods for interacting with the 'Authors' table in the database
 @Injectable()
 export class AuthorRepository extends Repository<Author> {
+  // The constructor initializes the base class with the Author entity and a new entity manager
   constructor(public readonly dataSource: DataSource) {
     super(Author, dataSource.createEntityManager());
   }
 
-  /**
-   * Get all plain authors
-   * @returns Array of plain authors
-   */
+  // This method retrieves all authors and maps them to plain author models
   public async getAllPlain(): Promise<PlainAuthorRepositoryOutput[]> {
     const authors = await this.find({});
-
     return authors.map(adaptAuthorEntityToPlainAuthorModel);
   }
 
-  /**
-   * Get a author by its ID
-   * @param id Author's ID
-   * @returns Author if found
-   * @throws 404: author with this ID was not found
-   */
-
+  // This method retrieves an author by its ID and maps it to a plain author model
+  // If the author is not found, it throws a NotFoundError
   public async getById(id: AuthorId): Promise<PlainAuthorRepositoryOutput> {
     const author = await this.findOne({ where: { id } });
-
     if (!author) {
       throw new NotFoundError(`Author - '${id}'`);
     }
     return adaptAuthorEntityToPlainAuthorModel(author);
   }
-  /**
-   * Create a new Author
-   * @Param input Data to create the new author
-   * @returns Created Author
-   */
 
+  // This method creates a new author and returns the created author as a plain author model
   public async createAuthor(
     input: CreateAuthorRepositoryInput,
   ): Promise<PlainAuthorRepositoryOutput> {
@@ -59,25 +47,17 @@ export class AuthorRepository extends Repository<Author> {
       if (!newAuthor) {
         throw new InternalServerError('An error occured creating new Author');
       }
-
       return newAuthor.id;
     });
     return this.getById(id);
   }
 
-  /**
-   * Delete an author from database
-   * @param id Author's id
-   */
+  // This method deletes an author by its ID
   public async deletebyid(id: AuthorId): Promise<void> {
     await this.delete(id);
   }
 
-  /**
-   * Update an author from database
-   * @param input Author's data
-   * @returns Updated author
-   */
+  // This method updates an author and returns the updated author as a plain author model
   public async updateById(
     input: UpdateAuthorRepositoryInput,
   ): Promise<PlainAuthorRepositoryOutput> {
@@ -86,11 +66,9 @@ export class AuthorRepository extends Repository<Author> {
       if (!author) {
         throw new NotFoundError(`Author - '${input.id}'`);
       }
-
       await manager.save({ ...author, ...input });
       return { ...author, ...input }.id;
     });
-
     return this.getById(id);
   }
 }

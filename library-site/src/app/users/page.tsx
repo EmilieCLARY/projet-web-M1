@@ -50,7 +50,7 @@ const UsersPage: FC = () => {
     setIsModalOpen(false);
   };
 
-  const handleSortAndFilter = (key) => {
+  const handleSortAndFilter = (key): void => {
     setSortKey(key);
     setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
     setSearchTerm('');
@@ -59,6 +59,8 @@ const UsersPage: FC = () => {
   const sortedAndFilteredUsers = users
     .filter(
       (user) =>
+        // Même erreur de retour à la ligne
+        // eslint-disable-next-line implicit-arrow-linebreak, operator-linebreak
         user.firstname.toLowerCase().includes(searchTerm.toLowerCase()) ||
         user.lastname.toLowerCase().includes(searchTerm.toLowerCase()),
     )

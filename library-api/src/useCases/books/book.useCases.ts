@@ -1,3 +1,4 @@
+// Import necessary modules and types
 import { Injectable } from '@nestjs/common';
 import { BookId } from 'library-api/src/entities';
 import { BookRepository } from 'library-api/src/repositories';
@@ -7,36 +8,26 @@ import {
   CreateBookUseCasesInput,
 } from 'library-api/src/useCases/books/book.useCases.type';
 
+// Define BookUseCases class that is Injectable (can be injected as a dependency)
 @Injectable()
 export class BookUseCases {
+  // Constructor that takes a BookRepository as a dependency
   constructor(private readonly bookRepository: BookRepository) {}
 
-  /**
-   * Get all plain books
-   * @returns Array of plain books
-   */
   public async getAllPlain(): Promise<PlainBookUseCasesOutput[]> {
+    // Call the getAllPlain method of the bookRepository and return the result
     return this.bookRepository.getAllPlain();
   }
 
-  /**
-   * Get a book by its ID
-   * @param id Book's ID
-   * @returns Book if found
-   * @throws 404: book with this ID was not found
-   */
   public async getById(id: BookId): Promise<BookUseCasesOutput> {
+    // Call the getById method of the bookRepository with the given id and return the result
     return this.bookRepository.getById(id);
   }
 
-  /**
-   * Create a new Book
-   * @Param input Data to create the new book
-   * @returns Created Book
-   */
   public async createNewBook(
     input: CreateBookUseCasesInput,
   ): Promise<PlainBookUseCasesOutput> {
+    // Call the createNewBook method of bookRepository with the given input and return the result
     return this.bookRepository.createNewBook(input);
   }
 
@@ -46,7 +37,9 @@ export class BookUseCases {
    * @throws NotFoundException : no book found
    */
   public async deletebyid(id: BookId): Promise<void> {
+    // Get the book by id
     const book = await this.getById(id);
+    // Call the deletebyid method of the bookRepository with the book's id
     await this.bookRepository.deletebyid(book.id);
   }
 }

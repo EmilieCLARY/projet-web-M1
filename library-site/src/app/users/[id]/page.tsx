@@ -2,8 +2,8 @@
 
 import React, { FC, useEffect } from 'react';
 import { useParams } from 'next/navigation';
-import { Navbar } from '../../layout';
 import { deleteUserById, useUserProviderById } from '@/hooks';
+import { Navbar } from '../../layout';
 
 const UserDetailsPage: FC = () => {
   const { id } = useParams();
@@ -12,13 +12,15 @@ const UserDetailsPage: FC = () => {
 
   useEffect(() => {
     loadUser(id.toString());
-  }, [loadUser]);
+  });
 
   useEffect(() => {
     document.title = 'Users List';
   }, []);
 
   const handleDelete = (): void => {
+    // On laisse la confirmation de la suppression à l'utilisateur
+    // eslint-disable-next-line no-alert
     if (window.confirm('Are you sure you want to delete this user ?')) {
       deleteUserById(id.toString());
     }

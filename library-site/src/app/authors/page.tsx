@@ -4,8 +4,8 @@ import Link from 'next/link';
 import Modal from 'react-modal';
 import React, { FC, useEffect, useState } from 'react';
 import { useAuthorsProviders, useBooksProviders } from '@/hooks';
-import { Navbar } from '../layout';
 import { createNewAuthor } from '@/hooks/creators/authorCreator';
+import { Navbar } from '../layout';
 
 const AuthorsPage: FC = () => {
   const { useListAuthors } = useAuthorsProviders();
@@ -68,7 +68,8 @@ const AuthorsPage: FC = () => {
       numberOfBooks: GetNumberOfBooks(author.id),
     }))
     .filter((author) =>
-     `${author.firstName} ${author.lastName}`
+      // eslint-disable-next-line implicit-arrow-linebreak
+      `${author.firstName} ${author.lastName}`
         .toLowerCase()
         .includes(searchTerm.toLowerCase()),
     )
@@ -154,7 +155,7 @@ const AuthorsPage: FC = () => {
                 src={author.photoUrl}
               />
               <h5
-                className="mb-1 text-xl font-medium text-gray-900 text-white"
+                className="mb-1 text-xl font-medium text-white"
                 id="authorName"
               >
                 <Link

@@ -6,8 +6,14 @@ import { RepositoryModule } from 'library-api/src/repositories/repository.module
 import { UseCasesModule } from 'library-api/src/useCases/useCases.module';
 import { UserController } from './user/user.controller';
 
+// Define a module for the controllers
 @Module({
+  // Import the UseCasesModule and RepositoryModule
+  // These modules provide services that the controllers depend on
   imports: [UseCasesModule, RepositoryModule],
+
+  // Declare the controllers that belong to this module
+  // These controllers handle HTTP requests and responses
   controllers: [
     AuthorController,
     BookController,

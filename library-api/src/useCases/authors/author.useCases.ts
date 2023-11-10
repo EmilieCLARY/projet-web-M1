@@ -1,3 +1,4 @@
+// Import necessary modules and types
 import { Injectable } from '@nestjs/common';
 import { AuthorId } from 'library-api/src/entities';
 import { AuthorRepository } from 'library-api/src/repositories';
@@ -6,8 +7,10 @@ import {
   CreateAuthorUseCasesInput,
 } from 'library-api/src/useCases/authors/author.useCases.type';
 
+// Define AuthorUseCases class that is Injectable (can be injected as a dependency)
 @Injectable()
 export class AuthorUseCases {
+  // Constructor that takes an AuthorRepository as a dependency
   constructor(private readonly authorRepository: AuthorRepository) {}
 
   /**
@@ -15,6 +18,7 @@ export class AuthorUseCases {
    * @returns Array of plain authors
    */
   public async getAllPlain(): Promise<PlainAuthorUseCasesOutput[]> {
+    // Call the getAllPlain method of the authorRepository and return the result
     return this.authorRepository.getAllPlain();
   }
 
@@ -25,6 +29,7 @@ export class AuthorUseCases {
    * @throws 404: author with this ID was not found
    */
   public async getById(id: AuthorId): Promise<PlainAuthorUseCasesOutput> {
+    // Call the getById method of the authorRepository with the given id and return the result
     return this.authorRepository.getById(id);
   }
 
@@ -36,6 +41,7 @@ export class AuthorUseCases {
   public async create(
     input: CreateAuthorUseCasesInput,
   ): Promise<PlainAuthorUseCasesOutput> {
+    // Call createAuthor method of authorRepository with the given input and return the result
     return this.authorRepository.createAuthor(input);
   }
 
@@ -45,6 +51,7 @@ export class AuthorUseCases {
    * @throws NotFoundException : no author found
    */
   public async deletebyid(id: AuthorId): Promise<void> {
+    // Get the author by id
     const author = await this.getById(id);
     await this.authorRepository.deletebyid(author.id);
   }

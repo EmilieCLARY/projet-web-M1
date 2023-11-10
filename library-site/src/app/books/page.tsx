@@ -3,12 +3,12 @@
 import React, { FC, useState, useEffect } from 'react';
 import Link from 'next/link';
 import Modal from 'react-modal';
-import { Navbar } from '../layout';
 import {
   useBooksProviders,
   useAuthorsProviders,
   useGenresProviders,
 } from '@/hooks';
+import { Navbar } from '../layout';
 import { useCreateNewBook } from '@/hooks/creators/bookCreator';
 import { AuthorModel } from '@/models';
 
@@ -57,6 +57,8 @@ const BooksPage: FC = () => {
       // eslint-disable-next-line react-hooks/rules-of-hooks
       useCreateNewBook(newBook);
     } else {
+      // On laisse l'alert box d'erreur de sélection d'auteur
+      // eslint-disable-next-line no-alert
       alert('Please select an author');
     }
     setIsModalOpen(false);
@@ -246,43 +248,49 @@ const BooksPage: FC = () => {
               className="flex mt-1 p-2 w-2/3 border-sky-950 text-black bg-white rounded-lg"
             />
           </label>
-          <label htmlFor="genre" className="block mb-2 text-white">
+          <label htmlFor="genre" className="block mb-2 text-white mt-6">
             Select Genres
-            <div className="flex flex-col">
+            <div className="flex flex-wrap justify-around items-center">
               {genres.map((item) => (
-                <label key={item.id} className="inline-flex items-center mt-3">
+                <label
+                  htmlFor="selectGenres"
+                  key={item.id}
+                  className="inline-flex items-center mt-3"
+                >
                   <input
                     type="checkbox"
-                    className="form-checkbox h-5 w-5 text-gray-600"
+                    className="form-checkbox h-5 w-5 text-white"
                     value={item.name}
                     onChange={(e): void => {
                       if (e.target.checked) {
                         setGenre((prev) => [...prev, e.target.value]);
                       } else {
-                        setGenre((prev) =>
-                         prev.filter((genre) => genre !== e.target.value),
+                        // Même problème de demande de retour à la ligne, puis interdiction
+                        // eslint-disable-next-line prettier/prettier
+                        setGenre((prev) => prev.filter((genre2) => genre2 !== e.target.value),
+                          // eslint-disable-function-paren-newline
                         );
                       }
                     }}
                   />
-                  <span className="ml-2 text-gray-700">{item.name}</span>
+                  <span className="ml-2 mr-10 text-white">{item.name}</span>
                 </label>
               ))}
             </div>
           </label>
           <div className="flex justify-between">
             <button
-              type="submit"
-              className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"
-            >
-              Add Book
-            </button>
-            <button
               type="button"
               className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"
               onClick={(): void => setIsModalOpen(false)}
             >
               Cancel
+            </button>
+            <button
+              type="submit"
+              className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"
+            >
+              Add Book
             </button>
           </div>
         </form>

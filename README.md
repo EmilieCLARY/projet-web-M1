@@ -91,3 +91,7 @@ LES USERS :
     - Recherche par :
         - Nom et prénom de l'utilisateur
     - Tri descendant et ascendant par : Nom et prénom de l'utilisateur
+
+
+Nous avons eu énormément de conflits entre prettier et eslint, du genre : L'un demande de mettre une instruction à la ligne, et une fois ce dernier mis à la ligne nous avons des erreurs de l'autres.
+Nous avons donc dû disable eslint à certains endroits.

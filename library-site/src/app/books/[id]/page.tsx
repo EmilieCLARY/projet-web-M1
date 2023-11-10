@@ -25,6 +25,8 @@ const BookDetailsPage: FC = () => {
   }
 
   const handleDelete = (): void => {
+    // On utilise une fenêtre de confirmation pour éviter les suppressions accidentelles
+    // eslint-disable-next-line no-alert
     if (window.confirm('Are you sure you want to delete this book ?')) {
       deleteBookById(id.toString());
     }
@@ -38,6 +40,7 @@ const BookDetailsPage: FC = () => {
       </h1>
       <div className="flex justify-center items-center">
         <div className="w-1/3 my-10 border border-gray-200 rounded-lg bg-sky-950 flex flex-col items-center my-2 flex-start">
+          {/* eslint-disable-next-next no-img-element */}
           <img
             className="w-auto h-80 mt-10 rounded-2xl shadow-lg"
             alt=""
