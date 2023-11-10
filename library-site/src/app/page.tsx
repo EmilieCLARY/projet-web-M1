@@ -22,12 +22,13 @@ const Home: FC = (): ReactElement => {
   useEffect(() => {
     if (books.length > 0) {
       setRandomBook(books[Math.floor(Math.random() * books.length)]);
-    }
-    const interval = setInterval(() => {
+    
+      const interval = setInterval(() => {
       if (books.length > 0) {
         setRandomBook(books[Math.floor(Math.random() * books.length)]);
       }
     }, 500000);
+    }
   }, [books]);
 
   useEffect(() => {
