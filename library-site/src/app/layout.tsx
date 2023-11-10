@@ -12,11 +12,6 @@ import { cp } from 'fs';
 
 const inter = Inter({ subsets: ['latin'] });
 
-function handleClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
-  event.preventDefault();
-  console.info('You clicked a breadcrumb.');
-}
-
 function CustomSeparator() {
   let pageName = window.location.pathname.split('/')[1];
   let breadcrumbs = [];
