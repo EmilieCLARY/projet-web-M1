@@ -3,8 +3,95 @@ import './globals.css';
 import { ReactElement, ReactNode } from 'react';
 import * as React from 'react';
 import { currentUser } from './login/page';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
+import Stack from '@mui/material/Stack';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import { cp } from 'fs';
 
 const inter = Inter({ subsets: ['latin'] });
+
+function handleClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
+  event.preventDefault();
+  console.info('You clicked a breadcrumb.');
+}
+
+function CustomSeparator() {
+  let pageName = window.location.pathname.split('/')[1];
+  let breadcrumbs = [];
+
+  if (pageName === '') {
+    pageName = 'Home';
+    breadcrumbs = [
+      <Link underline="hover" key="1" color="inherit" href="/">
+        Home
+      </Link>,
+    ];
+  } else {
+    breadcrumbs = [
+      <Link
+        underline="hover"
+        key="1"
+        color="inherit"
+        href="/"
+        className="text-white"
+      >
+        Home
+      </Link>,
+      <Link
+        underline="hover"
+        key="2"
+        color="inherit"
+        href={`/${pageName}`}
+        className="text-white"
+      >
+        {pageName}
+      </Link>,
+    ];
+  }
+
+  const pageName2 = window.location.pathname.split('/')[2];
+  if (pageName2 !== '' && pageName2 !== undefined) {
+    breadcrumbs = [
+      <Link
+        underline="hover"
+        key="1"
+        color="inherit"
+        href="/"
+        className="text-white"
+      >
+        Home
+      </Link>,
+      <Link
+        underline="hover"
+        key="2"
+        color="inherit"
+        href={`/${pageName}`}
+        className="text-white"
+      >
+        {pageName}
+      </Link>,
+      <Link
+        underline="hover"
+        key="3"
+        color="inherit"
+        href={`/${pageName}/${pageName2}`}
+        className="text-white"
+      >
+        {pageName2}
+      </Link>,
+    ];
+  }
+
+  return (
+    <Stack spacing={2}>
+      <Breadcrumbs separator="›" aria-label="breadcrumb" className="text-white">
+        {breadcrumbs}
+      </Breadcrumbs>
+    </Stack>
+  );
+}
 
 export default function RootLayout({
   children,
@@ -27,6 +114,7 @@ export const Navbar: React.FC = () => (
       <a className="flex items-center text-white text-2xl mx-5">
         {currentUser.firstname} - {currentUser.lastname}
       </a>
+      <CustomSeparator />
       <div
         className="hidden w-full md:block md:w-auto mx-10"
         id="navbar-default"
@@ -67,7 +155,7 @@ export const Navbar: React.FC = () => (
           <li>
             <a
               href="/users"
-              className="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700   md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+              className="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700   md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white   md:dark:hover:bg-transparent"
             >
               Users
             </a>
